@@ -9,7 +9,9 @@
       "DatingWebApp/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "8.0.13",
+          "Microsoft.EntityFrameworkCore.Analyzers": "8.0.13",
           "Microsoft.EntityFrameworkCore.Design": "8.0.13",
+          "Microsoft.EntityFrameworkCore.Tools": "8.0.13",
           "Pomelo.EntityFrameworkCore.MySql": "8.0.3",
           "Swashbuckle.AspNetCore": "6.6.2"
         },
@@ -302,6 +304,11 @@
             "assemblyVersion": "8.0.13.0",
             "fileVersion": "8.0.1325.6604"
           }
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Tools/8.0.13": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": "8.0.13"
         }
       },
       "Microsoft.Extensions.ApiDescription.Server/6.0.5": {},
@@ -651,6 +658,13 @@
       "sha512": "sha512-uQR2iTar+6ZEjEHTwgH0/7ySSRme4R9sDiupfG3w/eBub3365fPw/MjhsuOMQkdq9YzLM7veH4Qt/K9OqL26Qg==",
       "path": "microsoft.entityframeworkcore.relational/8.0.13",
       "hashPath": "microsoft.entityframeworkcore.relational.8.0.13.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Tools/8.0.13": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mbCcyX6ImsCcK2OU2qEQKLWaHn91Z7P/KlQSKCZt+rxRMM+d94jV3SR3KKSchA4TzAehZaDKeQlLxuToEX15gQ==",
+      "path": "microsoft.entityframeworkcore.tools/8.0.13",
+      "hashPath": "microsoft.entityframeworkcore.tools.8.0.13.nupkg.sha512"
     },
     "Microsoft.Extensions.ApiDescription.Server/6.0.5": {
       "type": "package",

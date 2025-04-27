@@ -127,6 +127,8 @@
     "schemas": {
       "AppUser": {
         "required": [
+          "passwordHash",
+          "passwordSalt",
           "userName"
         ],
         "type": "object",
@@ -137,6 +139,16 @@
           },
           "userName": {
             "type": "string",
+            "nullable": true
+          },
+          "passwordHash": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "passwordSalt": {
+            "type": "string",
+            "format": "byte",
             "nullable": true
           }
         },
