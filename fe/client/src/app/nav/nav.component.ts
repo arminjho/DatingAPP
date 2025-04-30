@@ -5,32 +5,39 @@ import { compileNgModule } from '@angular/compiler';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-nav',
   standalone: true,
-  imports: [FormsModule,BsDropdownModule],
+  imports: [FormsModule,BsDropdownModule,RouterLink,RouterLinkActive],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
 })
 export class NavComponent {
   accountService=inject(AccountService);
+  private router=inject(Router);
+  private toasterService=inject(ToastrService);
   
   model:any={};
   login(){
     
     this.accountService.login(this.model).subscribe({
       next:response=>{
-        console.log(response);
+        this.router.navigateByUrl('/members');
         
       },
       
-      error:eror=>console.log(eror)
+      error:eror=>this.toasterService.error(eror.error)
       
     })
   }
   logout(){
    this.accountService.logout();
+   this.router.navigateByUrl('/');
+
+   
   }
   
 }
