@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "SqKa0tZ45kg=",
+  "dgSpecHash": "kJF41IkU4oc=",
   "success": true,
   "projectFilePath": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\DatingWebApp.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\ArminMuratspahic\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\ArminMuratspahic\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\ArminMuratspahic\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.13\\microsoft.aspnetcore.authentication.jwtbearer.8.0.13.nupkg.sha512",
     "C:\\Users\\ArminMuratspahic\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",

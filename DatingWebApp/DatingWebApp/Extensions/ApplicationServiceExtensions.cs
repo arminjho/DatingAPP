@@ -19,6 +19,8 @@ namespace DatingWebApp.Extensions
 
             
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddCors();
             return services;
         }

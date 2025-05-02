@@ -1,10 +1,12 @@
 using System.Text;
 using DatingWebApp.Data;
+using DatingWebApp.Entities;
 using DatingWebApp.Extensions;
 using DatingWebApp.Interfaces;
 using DatingWebApp.Middleware;
 using DatingWebApp.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -24,8 +26,22 @@ app.UseCors(x=>x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost
 
 app.UseSwagger();
 app.UseSwaggerUI();
-app.MapControllers();
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapControllers();
+
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try 
+{
+    var context = services.GetRequiredService<Db_Context>();
+    await context.Database.MigrateAsync();
+    await Seed.SeedUsers(context);
+}
+catch (Exception ex)
+{
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex, "An error occurred during migration");
+}
 
 app.Run();
