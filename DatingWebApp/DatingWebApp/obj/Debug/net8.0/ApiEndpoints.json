@@ -160,13 +160,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "name",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
         "Name": "username",
-        "Type": "",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

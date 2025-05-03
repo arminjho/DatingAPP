@@ -262,13 +262,6 @@
         ],
         "parameters": [
           {
-            "name": "name",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "username",
             "in": "path",
             "required": true,
@@ -492,7 +485,7 @@
             "type": "string",
             "nullable": true
           },
-          "photo": {
+          "photos": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Photo"
@@ -535,6 +528,8 @@
       },
       "RegisterDto": {
         "required": [
+          "gender",
+          "knownAs",
           "password",
           "username"
         ],
@@ -547,6 +542,14 @@
           "password": {
             "minLength": 1,
             "type": "string"
+          },
+          "knownAs": {
+            "type": "string",
+            "nullable": true
+          },
+          "gender": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
