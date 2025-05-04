@@ -253,6 +253,35 @@
             }
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberUpdateDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberUpdateDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberUpdateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/Users/{username}": {
@@ -382,7 +411,7 @@
             "type": "string",
             "nullable": true
           },
-          "intoduction": {
+          "introduction": {
             "type": "string",
             "nullable": true
           },
@@ -490,6 +519,32 @@
             "items": {
               "$ref": "#/components/schemas/Photo"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MemberUpdateDto": {
+        "type": "object",
+        "properties": {
+          "introduction": {
+            "type": "string",
+            "nullable": true
+          },
+          "lookingFor": {
+            "type": "string",
+            "nullable": true
+          },
+          "interests": {
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "nullable": true
+          },
+          "country": {
+            "type": "string",
             "nullable": true
           }
         },

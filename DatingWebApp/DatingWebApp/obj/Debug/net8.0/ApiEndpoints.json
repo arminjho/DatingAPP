@@ -153,6 +153,22 @@
   },
   {
     "ContainingType": "DatingWebApp.Controllers.UsersController",
+    "Method": "UpdateUser",
+    "RelativePath": "api/Users",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "memberUpdateDto",
+        "Type": "DatingWebApp.DTOs.MemberUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DatingWebApp.Controllers.UsersController",
     "Method": "GetUser",
     "RelativePath": "api/Users/{username}",
     "HttpMethod": "GET",
