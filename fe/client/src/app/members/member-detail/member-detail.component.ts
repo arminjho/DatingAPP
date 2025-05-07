@@ -2,15 +2,16 @@ import { Component, inject, OnInit } from '@angular/core';
 import { MembersService } from '../../_service/members.service';
 import { ActivatedRoute } from '@angular/router';
 import { Member } from '../../_models/member';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { GalleryItem, GalleryModule, ImageItem } from 'ng-gallery';
+import { TimeagoModule } from 'ngx-timeago';
 
 
 @Component({
   selector: 'app-member-detail',
   standalone: true,
-  imports: [CommonModule,TabsModule, GalleryModule],
+  imports: [CommonModule,TabsModule, GalleryModule, TimeagoModule,DatePipe],
   templateUrl: './member-detail.component.html',
   styleUrl: './member-detail.component.css'
 })

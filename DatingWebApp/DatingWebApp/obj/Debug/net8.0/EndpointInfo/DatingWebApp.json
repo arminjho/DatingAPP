@@ -217,10 +217,201 @@
         }
       }
     },
+    "/api/Likes/{targetUserId}": {
+      "post": {
+        "tags": [
+          "Likes"
+        ],
+        "parameters": [
+          {
+            "name": "targetUserId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Likes/list": {
+      "get": {
+        "tags": [
+          "Likes"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Likes": {
+      "get": {
+        "tags": [
+          "Likes"
+        ],
+        "parameters": [
+          {
+            "name": "UserId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Predicate",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MemberDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MemberDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MemberDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Users": {
       "get": {
         "tags": [
           "Users"
+        ],
+        "parameters": [
+          {
+            "name": "Gender",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "CurrentUsername",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "MinAge",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "MaxAge",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -532,6 +723,20 @@
               "$ref": "#/components/schemas/Photo"
             },
             "nullable": true
+          },
+          "likedByUsers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserLike"
+            },
+            "nullable": true
+          },
+          "likedUsers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserLike"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -695,6 +900,9 @@
       },
       "RegisterDto": {
         "required": [
+          "city",
+          "country",
+          "dateOfBirth",
           "gender",
           "knownAs",
           "password",
@@ -706,23 +914,38 @@
             "minLength": 1,
             "type": "string"
           },
-          "password": {
+          "knownAs": {
             "minLength": 1,
             "type": "string"
           },
-          "knownAs": {
-            "type": "string",
-            "nullable": true
-          },
           "gender": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
+          },
+          "dateOfBirth": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "city": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "country": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 8,
+            "minLength": 4,
+            "type": "string"
           }
         },
         "additionalProperties": false
       },
       "UserDto": {
         "required": [
+          "gender",
+          "knownUs",
           "token",
           "username"
         ],
@@ -732,13 +955,41 @@
             "type": "string",
             "nullable": true
           },
+          "knownUs": {
+            "type": "string",
+            "nullable": true
+          },
           "token": {
+            "type": "string",
+            "nullable": true
+          },
+          "gender": {
             "type": "string",
             "nullable": true
           },
           "photoUrl": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserLike": {
+        "type": "object",
+        "properties": {
+          "sourceUser": {
+            "$ref": "#/components/schemas/AppUser"
+          },
+          "sourceUserId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "targetUser": {
+            "$ref": "#/components/schemas/AppUser"
+          },
+          "targetUserId": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

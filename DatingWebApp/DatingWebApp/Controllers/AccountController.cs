@@ -1,5 +1,6 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using AutoMapper;
 using DatingWebApp.Data;
 using DatingWebApp.DTOs;
 using DatingWebApp.Entities;
@@ -9,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DatingWebApp.Controllers
 {
-    public class AccountController(Db_Context context, ITokenService tokenService):BaseApiController
+    public class AccountController(Db_Context context, ITokenService tokenService, IMapper mapper):BaseApiController
     {
         [HttpPost("register")]
 
@@ -18,22 +19,21 @@ namespace DatingWebApp.Controllers
             if (await UserExist(registerDto.Username))
                 return BadRequest("Account with this username already exists, please log in");
             using var hmac = new HMACSHA512();
-           
-            var user = new AppUser
-            {
-                UserName = registerDto.Username.ToLower(),
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                PasswordSalt = hmac.Key,
-                KnownAs=registerDto.KnownAs,
-                Gender = registerDto.Gender,
-            };
+            var user = mapper.Map<AppUser>(registerDto);
+            user.UserName = registerDto.Username.ToLower();
+            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
+            user.PasswordSalt=hmac.Key;
+
 
             context.Users.Add(user);
             await context.SaveChangesAsync();
             return new UserDto
             {
                 Username = user.UserName,
-                Token = tokenService.CreateToken(user)
+                Token = tokenService.CreateToken(user),
+                KnownUs=user.KnownAs,
+                Gender = user.Gender
+
 
             };
         }
@@ -52,8 +52,10 @@ namespace DatingWebApp.Controllers
             return new UserDto
             {  
                 Username = user.UserName,
+                KnownUs=user.KnownAs,
                 Token = tokenService.CreateToken(user),
-                PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
+                PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
+                Gender=user.Gender
 
             };
         }

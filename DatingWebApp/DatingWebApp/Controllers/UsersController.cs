@@ -4,6 +4,7 @@ using DatingWebApp.Data;
 using DatingWebApp.DTOs;
 using DatingWebApp.Entities;
 using DatingWebApp.Extensions;
+using DatingWebApp.Helpers;
 using DatingWebApp.Interfaces;
 using DatingWebApp.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -18,9 +19,11 @@ namespace DatingWebApp.Controllers
     {
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
-            var users = await userRepository.GetMembersAsync();
+            userParams.CurrentUsername=User.GetUsername();
+            var users = await userRepository.GetMembersAsync(userParams);
+            Response.AddPaginationHeader(users);
 
             return Ok(users);
         }
@@ -49,6 +52,7 @@ namespace DatingWebApp.Controllers
         public async Task<ActionResult<PhotoDto>> AddPhoto(IFormFile file)
         {
             var user = await userRepository.GetUserByUsernameAsync(User.GetUsername());
+
             if (user == null) return BadRequest("Cannot update user");
 
             var result = await photoService.AddPhotoAsync(file);
