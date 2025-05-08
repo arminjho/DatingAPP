@@ -126,3 +126,8 @@ C:\Users\ArminMuratspahic\Desktop\DatingApp\DatingAPP\DatingWebApp\DatingWebApp\
 C:\Users\ArminMuratspahic\Desktop\DatingApp\DatingAPP\DatingWebApp\DatingWebApp\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\ArminMuratspahic\Desktop\DatingApp\DatingAPP\DatingWebApp\DatingWebApp\bin\Debug\net8.0\CloudinaryDotNet.dll
 C:\Users\ArminMuratspahic\Desktop\DatingApp\DatingAPP\DatingWebApp\DatingWebApp\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\ArminMuratspahic\Desktop\DatingApp\DatingAPP\DatingWebApp\DatingWebApp\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\ArminMuratspahic\Desktop\DatingApp\DatingAPP\DatingWebApp\DatingWebApp\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\ArminMuratspahic\Desktop\DatingApp\DatingAPP\DatingWebApp\DatingWebApp\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\ArminMuratspahic\Desktop\DatingApp\DatingAPP\DatingWebApp\DatingWebApp\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\ArminMuratspahic\Desktop\DatingApp\DatingAPP\DatingWebApp\DatingWebApp\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll

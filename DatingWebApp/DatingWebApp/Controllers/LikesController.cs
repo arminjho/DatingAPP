@@ -3,10 +3,12 @@ using DatingWebApp.Entities;
 using DatingWebApp.Extensions;
 using DatingWebApp.Helpers;
 using DatingWebApp.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DatingWebApp.Controllers
 {
+    [Authorize]
     public class LikesController(ILikesRepository likesRepository ): BaseApiController
     {
         [HttpPost("{targetUserId:int}")]

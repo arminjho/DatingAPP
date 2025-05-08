@@ -13,11 +13,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DatingWebApp.Controllers
 {
-
+    [Authorize]
     public class UsersController(IUserRepository userRepository,
         IMapper mapper, IPhotoService photoService) : BaseApiController
     {
-
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
@@ -27,7 +27,7 @@ namespace DatingWebApp.Controllers
 
             return Ok(users);
         }
-
+       
         [HttpGet("{username}")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
@@ -35,7 +35,7 @@ namespace DatingWebApp.Controllers
             if (user == null) return NotFound();
             return Ok(user);
         }
-
+      
         [HttpPut]
         public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
         {
