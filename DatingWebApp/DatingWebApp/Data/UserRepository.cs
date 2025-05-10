@@ -12,10 +12,16 @@ namespace DatingWebApp.Data
     {
         public async Task<MemberDto?> GetMemberAsync(string username)
         {
-            return await context.Users
+            var user= await context.Users
                  .Where(x => x.UserName == username)
                  .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
                  .SingleOrDefaultAsync();
+
+            if (user == null) throw new Exception("User je NULL");
+            var memberDto=mapper.Map<MemberDto>(user);
+            Console.WriteLine("MemberDto:", memberDto);
+            return memberDto;
+
         }
 
         public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
@@ -62,11 +68,8 @@ namespace DatingWebApp.Data
 
         }
 
-        public async Task<bool> SaveAllAsync()
-        {
-            return await context.SaveChangesAsync()>0;
-
-        }
+    
+        
 
         public void Update(AppUser user)
         {

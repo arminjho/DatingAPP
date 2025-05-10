@@ -5,6 +5,7 @@ using DatingWebApp.Extensions;
 using DatingWebApp.Interfaces;
 using DatingWebApp.Middleware;
 using DatingWebApp.Services;
+using DatingWebApp.SignalR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplicationService(builder.Configuration);
 builder.Services.AddIdentityService(builder.Configuration);
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost4200",
+        builder => builder.WithOrigins("http://localhost:4200")
+                          .AllowCredentials()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
+
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -31,26 +43,30 @@ builder.Services.AddSwaggerGen(c =>
             Type = SecuritySchemeType.ApiKey,
             Scheme = "Bearer"
         });
-                    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-     {
-     {
-                     new OpenApiSecurityScheme
-     {
-                 Reference = new OpenApiReference
-     {
-             Type = ReferenceType.SecurityScheme,
-             Id = "Bearer"
-     }
-     },
-                    new string[] { }
-     }
-     });
-    });
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                 new OpenApiSecurityScheme
+               {
+                  Reference = new OpenApiReference
+             {
+               Type = ReferenceType.SecurityScheme,
+               Id = "Bearer"
+             }
+               },
+                           new string[] { }
+                }
+            });
+        });
 
 
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
-app.UseCors(x=>x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "https://localhost:4200"));
+
+
+
+//app.UseCors(x=>x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "https://localhost:4200"));
+app.UseCors("AllowLocalhost4200");
 
 app.UseSwagger();
 app.UseSwaggerUI();
@@ -64,6 +80,8 @@ if (app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapHub<PresenceHub>("hubs/presence");
+app.MapHub<MessageHub>("hubs/message");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
@@ -73,6 +91,7 @@ try
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     var roleManager=services.GetRequiredService<RoleManager<AppRole>>();    
     await context.Database.MigrateAsync();
+    await context.Database.ExecuteSqlRawAsync("DELETE FROM `Connections`");
     await Seed.SeedUsers(userManager, roleManager);
 }
 catch (Exception ex) 

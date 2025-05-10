@@ -3,36 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|c:\\users\\arminmuratspahic\\desktop\\datingapp\\datingapp\\datingwebapp\\datingwebapp\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|solutionrelative:datingwebapp\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|c:\\users\\arminmuratspahic\\desktop\\datingapp\\datingapp\\datingwebapp\\datingwebapp\\extensions\\identityserviceextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|solutionrelative:datingwebapp\\extensions\\identityserviceextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|c:\\users\\arminmuratspahic\\desktop\\datingapp\\datingapp\\datingwebapp\\datingwebapp\\data\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|solutionrelative:datingwebapp\\data\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|c:\\users\\arminmuratspahic\\desktop\\datingapp\\datingapp\\datingwebapp\\datingwebapp\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|solutionrelative:datingwebapp\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|c:\\users\\arminmuratspahic\\desktop\\datingapp\\datingapp\\datingwebapp\\datingwebapp\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|solutionrelative:datingwebapp\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|c:\\users\\arminmuratspahic\\desktop\\datingapp\\datingapp\\datingwebapp\\datingwebapp\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|solutionrelative:datingwebapp\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|c:\\users\\arminmuratspahic\\desktop\\datingapp\\datingapp\\datingwebapp\\datingwebapp\\interfaces\\itokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|solutionrelative:datingwebapp\\interfaces\\itokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|c:\\users\\arminmuratspahic\\desktop\\datingapp\\datingapp\\datingwebapp\\datingwebapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|solutionrelative:datingwebapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|c:\\users\\arminmuratspahic\\desktop\\datingapp\\datingapp\\datingwebapp\\datingwebapp\\data\\seed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|solutionrelative:datingwebapp\\data\\seed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|c:\\users\\arminmuratspahic\\desktop\\datingapp\\datingapp\\datingwebapp\\datingwebapp\\helpers\\automapperprofiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5CD3DCE7-E6B1-4967-9F53-19F721FB95F7}|DatingWebApp\\DatingWebApp.csproj|solutionrelative:datingwebapp\\helpers\\automapperprofiles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -59,105 +39,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "AdminController.cs",
-              "DocumentMoniker": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Controllers\\AdminController.cs",
-              "RelativeDocumentMoniker": "DatingWebApp\\Controllers\\AdminController.cs",
-              "ToolTip": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Controllers\\AdminController.cs",
-              "RelativeToolTip": "DatingWebApp\\Controllers\\AdminController.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAYwDAAAAAwAAAAAAAAAA==",
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Data\\UserRepository.cs",
+              "RelativeDocumentMoniker": "DatingWebApp\\Data\\UserRepository.cs",
+              "ToolTip": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Data\\UserRepository.cs",
+              "RelativeToolTip": "DatingWebApp\\Data\\UserRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T14:07:12.427Z",
+              "WhenOpened": "2025-05-10T22:13:38.696Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "IdentityServiceExtensions.cs",
-              "DocumentMoniker": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Extensions\\IdentityServiceExtensions.cs",
-              "RelativeDocumentMoniker": "DatingWebApp\\Extensions\\IdentityServiceExtensions.cs",
-              "ToolTip": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Extensions\\IdentityServiceExtensions.cs",
-              "RelativeToolTip": "DatingWebApp\\Extensions\\IdentityServiceExtensions.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAQwCgAAABbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T14:03:18.51Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ITokenService.cs",
-              "DocumentMoniker": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Interfaces\\ITokenService.cs",
-              "RelativeDocumentMoniker": "DatingWebApp\\Interfaces\\ITokenService.cs",
-              "ToolTip": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Interfaces\\ITokenService.cs",
-              "RelativeToolTip": "DatingWebApp\\Interfaces\\ITokenService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T13:47:24.489Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "TokenService.cs",
-              "DocumentMoniker": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Services\\TokenService.cs",
-              "RelativeDocumentMoniker": "DatingWebApp\\Services\\TokenService.cs",
-              "ToolTip": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Services\\TokenService.cs",
-              "RelativeToolTip": "DatingWebApp\\Services\\TokenService.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBwAAABCAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T13:42:47.064Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Program.cs",
-              "RelativeDocumentMoniker": "DatingWebApp\\Program.cs",
-              "ToolTip": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Program.cs",
-              "RelativeToolTip": "DatingWebApp\\Program.cs",
-              "ViewState": "AgIAADkAAAAAAAAAAAAAAEUAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T13:24:05.533Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Seed.cs",
-              "DocumentMoniker": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Data\\Seed.cs",
-              "RelativeDocumentMoniker": "DatingWebApp\\Data\\Seed.cs",
-              "ToolTip": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Data\\Seed.cs",
-              "RelativeToolTip": "DatingWebApp\\Data\\Seed.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAADwvzUAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T13:06:38.439Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "UsersController.cs",
               "DocumentMoniker": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "DatingWebApp\\Controllers\\UsersController.cs",
               "ToolTip": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Controllers\\UsersController.cs",
               "RelativeToolTip": "DatingWebApp\\Controllers\\UsersController.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAAwCUAAAADAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAuwCMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T13:03:35.96Z",
+              "WhenOpened": "2025-05-10T22:00:55.258Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AccountController.cs",
-              "DocumentMoniker": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Controllers\\AccountController.cs",
-              "RelativeDocumentMoniker": "DatingWebApp\\Controllers\\AccountController.cs",
-              "ToolTip": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Controllers\\AccountController.cs",
-              "RelativeToolTip": "DatingWebApp\\Controllers\\AccountController.cs",
-              "ViewState": "AgIAACUAAAAAAAAAAAAQwDYAAAAPAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "AutoMapperProfiles.cs",
+              "DocumentMoniker": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Helpers\\AutoMapperProfiles.cs",
+              "RelativeDocumentMoniker": "DatingWebApp\\Helpers\\AutoMapperProfiles.cs",
+              "ToolTip": "C:\\Users\\ArminMuratspahic\\Desktop\\DatingApp\\DatingAPP\\DatingWebApp\\DatingWebApp\\Helpers\\AutoMapperProfiles.cs",
+              "RelativeToolTip": "DatingWebApp\\Helpers\\AutoMapperProfiles.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAYwCEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-08T12:49:42.206Z",
+              "WhenOpened": "2025-05-10T22:03:06.313Z",
               "EditorCaption": ""
             }
           ]

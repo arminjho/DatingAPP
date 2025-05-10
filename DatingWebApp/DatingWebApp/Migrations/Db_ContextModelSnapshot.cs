@@ -165,6 +165,35 @@ namespace DatingWebApp.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
+            modelBuilder.Entity("DatingWebApp.Entities.Connection", b =>
+                {
+                    b.Property<string>("ConnectionId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("GroupName")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("ConnectionId");
+
+                    b.HasIndex("GroupName");
+
+                    b.ToTable("Connections");
+                });
+
+            modelBuilder.Entity("DatingWebApp.Entities.Group", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("Groups");
+                });
+
             modelBuilder.Entity("DatingWebApp.Entities.Message", b =>
                 {
                     b.Property<int>("Id")
@@ -362,6 +391,13 @@ namespace DatingWebApp.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("DatingWebApp.Entities.Connection", b =>
+                {
+                    b.HasOne("DatingWebApp.Entities.Group", null)
+                        .WithMany("Connections")
+                        .HasForeignKey("GroupName");
+                });
+
             modelBuilder.Entity("DatingWebApp.Entities.Message", b =>
                 {
                     b.HasOne("DatingWebApp.Entities.AppUser", "Recipient")
@@ -465,6 +501,11 @@ namespace DatingWebApp.Migrations
                     b.Navigation("Photos");
 
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("DatingWebApp.Entities.Group", b =>
+                {
+                    b.Navigation("Connections");
                 });
 #pragma warning restore 612, 618
         }
