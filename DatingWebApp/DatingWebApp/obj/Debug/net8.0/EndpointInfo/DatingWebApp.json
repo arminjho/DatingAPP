@@ -154,6 +154,52 @@
         }
       }
     },
+    "/api/Admin/approve-photo/{photoId}": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [
+          {
+            "name": "photoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/reject-photo/{photoId}": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [
+          {
+            "name": "photoId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Buggy/auth": {
       "get": {
         "tags": [
@@ -1349,6 +1395,9 @@
             "type": "string",
             "nullable": true
           },
+          "isApproved": {
+            "type": "boolean"
+          },
           "appUserId": {
             "type": "integer",
             "format": "int32"
@@ -1371,6 +1420,9 @@
             "nullable": true
           },
           "isMain": {
+            "type": "boolean"
+          },
+          "isApproved": {
             "type": "boolean"
           }
         },

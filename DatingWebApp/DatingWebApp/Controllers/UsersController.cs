@@ -29,7 +29,7 @@ namespace DatingWebApp.Controllers
             return Ok(users);
         }
 
-        [HttpGet("{username}")]  // /api/users/2
+        [HttpGet("{username}")]  
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
             var currentUsername = User.GetUsername();
@@ -70,10 +70,7 @@ namespace DatingWebApp.Controllers
                 PublicId = result.PublicId
             };
 
-            if (user.Photos.Count == 0)
-            {
-                photo.IsMain = true;
-            }
+            
 
             user.Photos.Add(photo);
 
@@ -104,15 +101,14 @@ namespace DatingWebApp.Controllers
         public async Task<ActionResult> DeletePhoto(int photoId)
         {
             var user = await unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
+
             if (user == null) return BadRequest("User not found");
 
 
-            var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
+            var photo = await unitOfWork.PhotoRepository.GetPhotoById(photoId);
 
             if (photo == null || photo.IsMain) return BadRequest("This photo cannot be deleted");
 
-
-            if (photo.IsMain) return BadRequest("You cannot delete your main photo");
 
             if (photo.PublicId != null)
             {

@@ -5,7 +5,8 @@ using DatingWebApp.Interfaces;
 namespace DatingWebApp.Data
 {
     public class UnitOfWork(Db_Context context, IUserRepository userRepository, 
-        ILikesRepository likesRepository,IMessageRepository messageRepository):IUnitOfWork
+        ILikesRepository likesRepository,IMessageRepository messageRepository,
+        IPhotoRepository photoRepository):IUnitOfWork
     {
        
         public IUserRepository UserRepository =>userRepository;
@@ -13,6 +14,8 @@ namespace DatingWebApp.Data
         public IMessageRepository MessageRepository => messageRepository;
 
         public ILikesRepository LikesRepository => likesRepository;
+
+        public IPhotoRepository PhotoRepository => photoRepository;
 
         public async Task<bool> Complete()
         {
