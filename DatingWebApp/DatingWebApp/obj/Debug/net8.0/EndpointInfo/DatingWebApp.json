@@ -922,6 +922,8 @@
       },
       "AppUser": {
         "required": [
+          "city",
+          "country",
           "gender",
           "knownAs"
         ],
@@ -1052,7 +1054,7 @@
             },
             "nullable": true
           },
-          "messagesRecieved": {
+          "messagesReceived": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Message"
@@ -1160,7 +1162,7 @@
             "type": "string",
             "nullable": true
           },
-          "intoduction": {
+          "introduction": {
             "type": "string",
             "nullable": true
           },
@@ -1183,7 +1185,7 @@
           "photos": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Photo"
+              "$ref": "#/components/schemas/PhotoDto"
             },
             "nullable": true
           }

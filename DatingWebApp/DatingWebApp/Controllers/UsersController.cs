@@ -17,26 +17,30 @@ namespace DatingWebApp.Controllers
     public class UsersController(IUnitOfWork unitOfWork,
         IMapper mapper, IPhotoService photoService) : BaseApiController
     {
-        
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
+        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
         {
-            userParams.CurrentUsername=User.GetUsername();
+            userParams.CurrentUsername = User.GetUsername();
             var users = await unitOfWork.UserRepository.GetMembersAsync(userParams);
+
             Response.AddPaginationHeader(users);
 
             return Ok(users);
         }
-       
-        [HttpGet("{username}")]
+
+        [HttpGet("{username}")]  // /api/users/2
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
-            var user = await unitOfWork.UserRepository.GetMemberAsync(username);
+            var currentUsername = User.GetUsername();
+            var user = await unitOfWork.UserRepository.GetMemberAsync(username,
+                isCurrentUser: currentUsername == username);
+
             if (user == null) return NotFound();
 
-            return Ok(user);
+            return user;
         }
-      
+
         [HttpPut]
         public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
         {
