@@ -53,6 +53,22 @@
   },
   {
     "ContainingType": "DatingWebApp.Controllers.AdminController",
+    "Method": "ApprovePhoto",
+    "RelativePath": "api/Admin/approve-photo/{photoId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "photoId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DatingWebApp.Controllers.AdminController",
     "Method": "EditRoles",
     "RelativePath": "api/Admin/edit-roles/{username}",
     "HttpMethod": "POST",
@@ -80,6 +96,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DatingWebApp.Controllers.AdminController",
+    "Method": "RejectPhoto",
+    "RelativePath": "api/Admin/reject-photo/{photoId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "photoId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

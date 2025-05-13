@@ -1,0 +1,22 @@
+.photo-management__img-thumbnail {
+    height: 175px;
+    min-width: 175px !important;
+    margin-bottom: 2px;
+}
+
+.photo-management__not-approved {
+    opacity: 0.2;
+}
+
+.photo-management__img-wrapper {
+    position: relative
+}
+
+.photo-management__img-text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 30%;
+}

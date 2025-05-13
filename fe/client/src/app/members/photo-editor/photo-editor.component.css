@@ -1,13 +1,36 @@
-img.img-thumbnail {
+.photo-editor__img-thumbnail {
     height: 100px;
     min-width: 100px !important;
     margin-bottom: 2px;
 }
 
-.nv-file-over {
+.photo-editor__nv-file-over {
     border: dotted 3px red;
 }
 
 input[type=file] {
     color: transparent;
+}
+
+.photo-editor__not-approved {
+    opacity: 0.2;
+}
+
+.photo-editor__img-wrapper {
+    position: relative
+}
+
+.photo-editor__img-text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 30%;
+    text-align: center; 
+    word-wrap: break-word;
+    white-space: normal;
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;   
 }
