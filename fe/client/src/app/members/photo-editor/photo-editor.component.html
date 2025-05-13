@@ -1,14 +1,14 @@
 <div class="row">
     @for (photo of member().photos; track photo.id) {
-        <div class="col-2 img-wrapper">
+        <div class="col-2 photo-editor__img-wrapper">
             <img src="{{photo.url}}" 
             alt="photo of user" 
-            class="img-thumbnail mb-1"
-            [class.not-approved]="!photo.isApproved" 
+            class="photo-editor__img-thumbnail mb-1"
+            [class.photo-editor__.not-approved]="!photo.isApproved" 
             >
 
              @if (!photo.isApproved) {
-                <div class="text-center img-text">
+                <div class="text-center photo-editor__img-text">
                     <span class="text-danger">Awaiting approval</span>
                 </div>
             }
@@ -17,7 +17,7 @@
                 <button 
                 class="btn btn-sm me-1"
                 [disabled]="photo.isMain || !photo.isApproved"
-                (click)="setMainPhoto(photo)"
+                (click)="setPhotoAsMain(photo)"
                 [ngClass]="photo.isMain ? 'btn-succes active':'btn-outline-success' "
                 >Main</button>
                 <button 
@@ -40,7 +40,7 @@
         <h3>Add Photo</h3>
 
         <div ng2FileDrop
-             [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+             [ngClass]="{'photo-editor__nv-file-over': hasBaseDropZoneOver}"
              (fileOver)="fileOverBase($event)"
              [uploader]="uploader"
              class="card bg-faded p-5 text-center my-drop-zone">

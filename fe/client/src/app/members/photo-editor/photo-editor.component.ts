@@ -25,7 +25,7 @@ export class PhotoEditorComponent implements OnInit {
   ngOnInit(): void {
     this.initializeUploader();
   }
-  setMainPhoto(photo:Photo){
+  setPhotoAsMain(photo:Photo){
       this.memberService.setMainPhoto(photo).subscribe({
         next:_=>{
           const user=this.accountService.currentUser();

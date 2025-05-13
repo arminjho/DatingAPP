@@ -1,18 +1,18 @@
-img.img-thumbnail {
+.photo-management__img-thumbnail {
     height: 175px;
     min-width: 175px !important;
     margin-bottom: 2px;
 }
 
-.not-approved {
+.photo-management__not-approved {
     opacity: 0.2;
 }
 
-.img-wrapper {
+.photo-management__img-wrapper {
     position: relative
 }
 
-.img-text {
+.photo-management__img-text {
     position: absolute;
     left: 0;
     right: 0;
