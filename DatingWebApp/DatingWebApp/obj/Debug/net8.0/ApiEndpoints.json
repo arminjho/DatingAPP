@@ -53,6 +53,32 @@
   },
   {
     "ContainingType": "DatingWebApp.Controllers.AdminController",
+    "Method": "AddTag",
+    "RelativePath": "api/Admin/add-tag",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tagDto",
+        "Type": "DatingWebApp.DTOs.TagDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "DatingWebApp.DTOs.TagDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "DatingWebApp.Controllers.AdminController",
     "Method": "ApprovePhoto",
     "RelativePath": "api/Admin/approve-photo/{photoId}",
     "HttpMethod": "POST",
@@ -61,6 +87,22 @@
     "Parameters": [
       {
         "Name": "photoId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DatingWebApp.Controllers.AdminController",
+    "Method": "DeleteTag",
+    "RelativePath": "api/Admin/delete-tag/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -113,6 +155,26 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DatingWebApp.Controllers.AdminController",
+    "Method": "GetAllTags",
+    "RelativePath": "api/Admin/tags",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DatingWebApp.DTOs.TagDto, DatingWebApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "DatingWebApp.Controllers.AdminController",
@@ -381,6 +443,58 @@
     "ReturnTypes": [
       {
         "Type": "System.Collections.Generic.IEnumerable\u00601[[DatingWebApp.DTOs.MessageDto, DatingWebApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "DatingWebApp.Controllers.PhotosController",
+    "Method": "GetPhotosByTags",
+    "RelativePath": "api/Photos/filter-by-tags",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tags",
+        "Type": "System.Collections.Generic.List\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DatingWebApp.DTOs.PhotoWithTagsDto, DatingWebApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "DatingWebApp.Controllers.PhotosController",
+    "Method": "GetUnapprovedPhotosByTags",
+    "RelativePath": "api/Photos/unapproved-by-tags",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tags",
+        "Type": "System.Collections.Generic.List\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[DatingWebApp.DTOs.PhotoWithTagsDto, DatingWebApp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

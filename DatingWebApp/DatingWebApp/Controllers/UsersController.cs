@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using System.Text.RegularExpressions;
 using AutoMapper;
 using DatingWebApp.Data;
 using DatingWebApp.DTOs;
@@ -90,19 +91,11 @@ namespace DatingWebApp.Controllers
         {
 
             var user = await unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
-
-            if (user == null) return BadRequest("Cannot update user");
-
-
-
+            if (user == null) { return BadRequest("Cannot update user"); }
             var result = await photoService.AddPhotoAsync(file);
 
-            if (result.Error != null) return BadRequest(result.Error.Message);
-
-
-
+            if (result.Error != null){ return BadRequest(result.Error.Message); }
             var photo = new Photo
-
             {
 
                 Url = result.SecureUrl.AbsoluteUri,
@@ -111,9 +104,22 @@ namespace DatingWebApp.Controllers
 
             };
 
+            var validTags = tags
+                .Where(t => !string.IsNullOrWhiteSpace(t))
+                .Select(t => t.Trim().ToLower())
+                .Distinct()
+                .ToList();
 
-            foreach (var tagName in tags.Distinct())
+            foreach (var tagName in validTags)
+            {
 
+                if (!Regex.IsMatch(tagName, @"^[a-zA-Z0-9\s\-]{2,30}$"))
+
+                    return BadRequest($"Invalid tag: {tagName}");
+
+            }
+
+            foreach (var tagName in validTags)
             {
 
                 var tag = await unitOfWork.TagRepository.GetOrCreateTagAsync(tagName);
@@ -122,14 +128,9 @@ namespace DatingWebApp.Controllers
 
             }
 
-
-
             user.Photos.Add(photo);
 
-
-
             if (await unitOfWork.Complete())
-
             {
 
                 return CreatedAtAction(nameof(GetUser),
@@ -139,8 +140,6 @@ namespace DatingWebApp.Controllers
                     mapper.Map<PhotoWithTagsDto>(photo));
 
             }
-
-
 
             return BadRequest("Problem adding photo");
         }

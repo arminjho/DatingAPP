@@ -61,32 +61,29 @@ namespace DatingWebApp.Data
 
             builder.Entity<Photo>().HasQueryFilter(p => p.IsApproved);
 
-            //task2
+            
 
             builder.Entity<PhotoTag>()
-
-    .HasKey(pt => new { pt.PhotoId, pt.TagId });
+                .HasKey(pt => new { pt.PhotoId, pt.TagId });
 
 
 
             builder.Entity<PhotoTag>()
-
                 .HasOne(pt => pt.Photo)
-
                 .WithMany(p => p.PhotoTags)
-
                 .HasForeignKey(pt => pt.PhotoId);
 
 
 
             builder.Entity<PhotoTag>()
-
                 .HasOne(pt => pt.Tag)
-
                 .WithMany(t => t.PhotoTags)
+                .HasForeignKey(pt => pt.TagId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-                .HasForeignKey(pt => pt.TagId);
-
+            builder.Entity<Tag>()
+                .HasIndex(t => t.Name)
+                .IsUnique();
 
         }
 

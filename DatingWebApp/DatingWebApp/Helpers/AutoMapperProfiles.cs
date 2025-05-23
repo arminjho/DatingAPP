@@ -29,7 +29,7 @@ namespace DatingWebApp.Helpers
 
             //
 
-            CreateMap<Tag, TagDto>();
+            CreateMap<Tag, TagDto>().ReverseMap();
 
             CreateMap<Photo, PhotoWithTagsDto>()
 
