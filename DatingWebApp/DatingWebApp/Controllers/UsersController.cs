@@ -82,7 +82,72 @@ namespace DatingWebApp.Controllers
 
             return BadRequest("Problem addding photo");
         }
-        [HttpPut("set-main-photo/{photoId:int}")]
+
+
+        [HttpPost("add-photo-with-tags")]
+        public async Task<ActionResult<PhotoWithTagsDto>> AddPhotoWithTags(IFormFile file,
+            [FromQuery] List<string> tags)
+        {
+
+            var user = await unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
+
+            if (user == null) return BadRequest("Cannot update user");
+
+
+
+            var result = await photoService.AddPhotoAsync(file);
+
+            if (result.Error != null) return BadRequest(result.Error.Message);
+
+
+
+            var photo = new Photo
+
+            {
+
+                Url = result.SecureUrl.AbsoluteUri,
+
+                PublicId = result.PublicId
+
+            };
+
+
+            foreach (var tagName in tags.Distinct())
+
+            {
+
+                var tag = await unitOfWork.TagRepository.GetOrCreateTagAsync(tagName);
+
+                photo.PhotoTags.Add(new PhotoTag { Photo = photo, Tag = tag });
+
+            }
+
+
+
+            user.Photos.Add(photo);
+
+
+
+            if (await unitOfWork.Complete())
+
+            {
+
+                return CreatedAtAction(nameof(GetUser),
+
+                    new { user = user.UserName },
+
+                    mapper.Map<PhotoWithTagsDto>(photo));
+
+            }
+
+
+
+            return BadRequest("Problem adding photo");
+        }
+
+
+
+         [HttpPut("set-main-photo/{photoId:int}")]
         public async Task<ActionResult> SetMainPhoto(int photoId)
         {
             var user = await unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
@@ -97,6 +162,8 @@ namespace DatingWebApp.Controllers
             return BadRequest("Problem setting main photo");
 
         }
+
+
         [HttpDelete("delete-photo/{photoId}")]
         public async Task<ActionResult> DeletePhoto(int photoId)
         {
