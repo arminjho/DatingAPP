@@ -77,7 +77,7 @@ namespace DatingWebApp.Controllers
 
             if (await unitOfWork.Complete())
             {
-                return CreatedAtAction(nameof(GetUser), new { user = user.UserName }, mapper.Map<PhotoDto>(photo));
+                return CreatedAtAction(nameof(GetUser), new { username = user.UserName }, mapper.Map<PhotoDto>(photo));
             }
 
 
@@ -135,7 +135,7 @@ namespace DatingWebApp.Controllers
 
                 return CreatedAtAction(nameof(GetUser),
 
-                    new { user = user.UserName },
+                    new { username = user.UserName },
 
                     mapper.Map<PhotoWithTagsDto>(photo));
 
