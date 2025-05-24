@@ -27,7 +27,6 @@ namespace DatingWebApp.Helpers
                 ? DateTime.SpecifyKind(d.Value, DateTimeKind.Utc) : null);
 
 
-            //
 
             CreateMap<Tag, TagDto>().ReverseMap();
 

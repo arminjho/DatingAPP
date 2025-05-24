@@ -14,17 +14,23 @@ namespace DatingWebApp.Data
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<IEnumerable<PhotoForApprovalDto>> GetUnapprovedPhotos()
+        public async Task<IEnumerable<PhotoWithTagsDto>> GetUnapprovedPhotos()
         {
             return await context.Photos
                 .IgnoreQueryFilters()
                 .Where(p => p.IsApproved == false)
-                .Select(u => new PhotoForApprovalDto
+                .Include(p=>p.PhotoTags)
+                .ThenInclude(pt=>pt.Tag)
+                .Select(u => new PhotoWithTagsDto
                 {
                     Id = u.Id,
-                    Username = u.AppUser.UserName,
                     Url = u.Url,
-                    IsApproved = u.IsApproved
+                    IsApproved = u.IsApproved,
+                    Tags=u.PhotoTags.Select(pt=> new TagDto
+                    {
+                        Id=pt.TagId,
+                        Name=pt.Tag.Name
+                    }).ToList()
                 }).ToListAsync();
         }
 

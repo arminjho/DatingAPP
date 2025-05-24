@@ -1501,7 +1501,7 @@
           "photos": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/PhotoDto"
+              "$ref": "#/components/schemas/PhotoWithTagsDto"
             },
             "nullable": true
           }
