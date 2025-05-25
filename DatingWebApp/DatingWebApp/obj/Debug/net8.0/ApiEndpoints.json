@@ -132,6 +132,16 @@
   },
   {
     "ContainingType": "DatingWebApp.Controllers.AdminController",
+    "Method": "GetPhotoApprovalStats",
+    "RelativePath": "api/Admin/photo-approval-stats",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DatingWebApp.Controllers.AdminController",
     "Method": "GetPhotosForModeration",
     "RelativePath": "api/Admin/photos-to-moderate",
     "HttpMethod": "GET",
@@ -180,6 +190,16 @@
     "ContainingType": "DatingWebApp.Controllers.AdminController",
     "Method": "GetUsersWithRoles",
     "RelativePath": "api/Admin/users-with-roles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "DatingWebApp.Controllers.AdminController",
+    "Method": "GetUsersWithoutMainPhoto",
+    "RelativePath": "api/Admin/users-without-main-photo",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

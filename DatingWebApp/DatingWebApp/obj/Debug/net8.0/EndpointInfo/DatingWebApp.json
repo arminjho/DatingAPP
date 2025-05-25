@@ -309,6 +309,30 @@
         }
       }
     },
+    "/api/Admin/photo-approval-stats": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Admin/users-without-main-photo": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Buggy/auth": {
       "get": {
         "tags": [

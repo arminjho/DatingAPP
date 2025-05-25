@@ -200,5 +200,30 @@ namespace DatingWebApp.Controllers
             return NoContent();
 
         }
+
+        [HttpGet("photo-approval-stats")]
+        public async Task<ActionResult> GetPhotoApprovalStats()
+        {
+
+            var stats = await unitOfWork.AdminRepository.GetPhotoApprovalStatsAsync();
+
+            return Ok(stats);
+
+        }
+
+
+
+        [HttpGet("users-without-main-photo")]
+        public async Task<ActionResult> GetUsersWithoutMainPhoto()
+        {
+            var users = await unitOfWork.AdminRepository.GetUsersWithoutMainPhotoAsync();
+
+            return Ok(users);
+
+        }
+
+
+
+
     }
 }

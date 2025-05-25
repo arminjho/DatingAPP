@@ -6,7 +6,7 @@ namespace DatingWebApp.Data
 {
     public class UnitOfWork(Db_Context context, IUserRepository userRepository, 
         ILikesRepository likesRepository,IMessageRepository messageRepository,
-        IPhotoRepository photoRepository, ITagRepository tagRepository):IUnitOfWork
+        IPhotoRepository photoRepository, ITagRepository tagRepository, IAdminRepository adminRepository):IUnitOfWork
     {
        
         public IUserRepository UserRepository =>userRepository;
@@ -17,6 +17,8 @@ namespace DatingWebApp.Data
 
         public IPhotoRepository PhotoRepository => photoRepository;
         public ITagRepository TagRepository=> tagRepository;
+
+        public IAdminRepository AdminRepository => adminRepository; 
 
         public async Task<bool> Complete()
         {
