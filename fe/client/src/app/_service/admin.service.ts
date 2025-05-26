@@ -4,6 +4,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { User } from '../_models/User';
 import { Photo } from '../_models/photo';
 import { Tag } from '../_models/tag';
+import { PhotoStats } from '../_models/photoStats';
+import { UserWithoutMainPhoto } from '../_models/userWithoutMainPhoto';
 
 @Injectable({
   providedIn: 'root',
@@ -52,5 +54,12 @@ export class AdminService {
 
   deleteTag(tagId: number) {
     return this.http.delete(this.baseUrl + 'admin/delete-tag/' + tagId);
+  }
+
+  getPhotoApprovalStats(){
+    return this.http.get<PhotoStats[]>(this.baseUrl+'admin/photo-approval-stats');
+  }
+   getUsersWithoutMainPhoto(){
+    return this.http.get<UserWithoutMainPhoto[]>(this.baseUrl+'admin/users-without-main-photo');
   }
 }

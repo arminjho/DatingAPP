@@ -26,5 +26,13 @@
             </div>
         </tab>
 
+          <tab heading="Statistics" *appHasRole="['Admin','Moderator']">
+            <div class="container">
+
+                <app-user-statistics />
+
+            </div>
+        </tab>
+
     </tabset>
 </div>
