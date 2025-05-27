@@ -274,6 +274,41 @@ namespace DatingWebApp.Migrations
                     b.ToTable("Photos");
                 });
 
+            modelBuilder.Entity("DatingWebApp.Entities.PhotoTag", b =>
+                {
+                    b.Property<int>("PhotoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PhotoId", "TagId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("PhotoTags");
+                });
+
+            modelBuilder.Entity("DatingWebApp.Entities.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Tags");
+                });
+
             modelBuilder.Entity("DatingWebApp.Entities.UserLike", b =>
                 {
                     b.Property<int>("SourceUserId")
@@ -433,6 +468,25 @@ namespace DatingWebApp.Migrations
                     b.Navigation("AppUser");
                 });
 
+            modelBuilder.Entity("DatingWebApp.Entities.PhotoTag", b =>
+                {
+                    b.HasOne("DatingWebApp.Entities.Photo", "Photo")
+                        .WithMany("PhotoTags")
+                        .HasForeignKey("PhotoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DatingWebApp.Entities.Tag", "Tag")
+                        .WithMany("PhotoTags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Photo");
+
+                    b.Navigation("Tag");
+                });
+
             modelBuilder.Entity("DatingWebApp.Entities.UserLike", b =>
                 {
                     b.HasOne("DatingWebApp.Entities.AppUser", "SourceUser")
@@ -511,6 +565,16 @@ namespace DatingWebApp.Migrations
             modelBuilder.Entity("DatingWebApp.Entities.Group", b =>
                 {
                     b.Navigation("Connections");
+                });
+
+            modelBuilder.Entity("DatingWebApp.Entities.Photo", b =>
+                {
+                    b.Navigation("PhotoTags");
+                });
+
+            modelBuilder.Entity("DatingWebApp.Entities.Tag", b =>
+                {
+                    b.Navigation("PhotoTags");
                 });
 #pragma warning restore 612, 618
         }

@@ -15,6 +15,8 @@ namespace DatingWebApp.Data
         public DbSet <Group> Groups { get; set; }
         public DbSet <Connection> Connections { get; set; }
         public DbSet <Photo> Photos { get; set; }
+        public DbSet <Tag> Tags { get; set; }
+        public DbSet <PhotoTag> PhotoTags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -58,7 +60,30 @@ namespace DatingWebApp.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Photo>().HasQueryFilter(p => p.IsApproved);
+
             
+
+            builder.Entity<PhotoTag>()
+                .HasKey(pt => new { pt.PhotoId, pt.TagId });
+
+
+
+            builder.Entity<PhotoTag>()
+                .HasOne(pt => pt.Photo)
+                .WithMany(p => p.PhotoTags)
+                .HasForeignKey(pt => pt.PhotoId);
+
+
+
+            builder.Entity<PhotoTag>()
+                .HasOne(pt => pt.Tag)
+                .WithMany(t => t.PhotoTags)
+                .HasForeignKey(pt => pt.TagId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Tag>()
+                .HasIndex(t => t.Name)
+                .IsUnique();
 
         }
 

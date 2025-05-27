@@ -25,6 +25,17 @@ namespace DatingWebApp.Helpers
             CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
             CreateMap<DateTime?, DateTime?>().ConvertUsing(d => d.HasValue
                 ? DateTime.SpecifyKind(d.Value, DateTimeKind.Utc) : null);
+
+
+
+            CreateMap<Tag, TagDto>().ReverseMap();
+
+            CreateMap<Photo, PhotoWithTagsDto>()
+
+                .ForMember(d => d.Tags, o =>
+
+                    o.MapFrom(s => s.PhotoTags.Select(pt => pt.Tag)));
+
         }
     }
 }
