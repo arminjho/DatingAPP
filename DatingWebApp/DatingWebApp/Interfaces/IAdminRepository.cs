@@ -4,7 +4,7 @@ namespace DatingWebApp.Interfaces
 {
     public interface IAdminRepository
     {
-        Task<List<PhotoApprovalStatsDto>> GetPhotoApprovalStatsAsync();
+        Task<List<PhotoApprovalStatsDto>> GetPhotoApprovalCountAsync();
         Task<List<UserWithoutMainPhotoDto>> GetUsersWithoutMainPhotoAsync();
     }
 }

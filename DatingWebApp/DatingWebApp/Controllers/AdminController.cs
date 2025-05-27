@@ -54,84 +54,7 @@ namespace DatingWebApp.Controllers
             return Ok(await userManager.GetRolesAsync(user));
         }
 
-        [Authorize(Policy = "ModeratePhotoRole")]
-        [HttpGet("photos-to-moderate")]
-        public async Task<ActionResult> GetPhotosForModeration()
-        {
-            var photos = await unitOfWork.PhotoRepository.GetUnapprovedPhotos();
-
-            return Ok(photos);
-        }
-
-
-        [Authorize(Policy = "ModeratePhotoRole")]
-        [HttpPost("approve-photo/{photoId}")]
-        public async Task<ActionResult> ApprovePhoto(int photoId)
-        {
-            try
-
-            {
-                var photo = await unitOfWork.PhotoRepository.GetPhotoById(photoId);
-
-                if (photo == null) { return NotFound("Could not get photo from db"); }
-
-                photo.IsApproved = true;
-
-                var user = await unitOfWork.UserRepository.GetUserByPhotoId(photoId);
-
-                if (user == null) { return NotFound("Could not get user from db"); }
-
-                if (!user.Photos.Any(x => x.IsMain)) { photo.IsMain = true; }
-
-                await unitOfWork.Complete();
-
-                return Ok();
-            }
-
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "An error ocurred while approving the photo");
-                return StatusCode(500);
-
-            }
-        }
-
-        [Authorize(Policy = "ModeratePhotoRole")]
-        [HttpPost("reject-photo/{photoId}")]
-        public async Task<ActionResult> RejectPhoto(int photoId)
-        {
-
-            try
-
-            {
-                var photo = await unitOfWork.PhotoRepository.GetPhotoById(photoId);
-
-                if (photo == null) { return NotFound("Could not get photo from db"); }
-
-                if (photo.PublicId != null)
-                {
-                    var result = await photoService.DeletePhotoAsync(photo.PublicId);
-
-                    if (result.Result == "ok")
-                    {
-                        unitOfWork.PhotoRepository.RemovePhoto(photo);
-                    }
-                }
-                else
-                {
-                    unitOfWork.PhotoRepository.RemovePhoto(photo);
-                }
-
-                await unitOfWork.Complete();
-
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "An error ocurred while rejecting the photo");
-                return StatusCode(500);
-            }
-        }
+      
 
 
         [Authorize(Policy = "RequireAdminRole")]
@@ -202,10 +125,10 @@ namespace DatingWebApp.Controllers
         }
 
         [HttpGet("photo-approval-stats")]
-        public async Task<ActionResult> GetPhotoApprovalStats()
+        public async Task<ActionResult> GetPhotoApprovalCountAsync()
         {
 
-            var stats = await unitOfWork.AdminRepository.GetPhotoApprovalStatsAsync();
+            var stats = await unitOfWork.AdminRepository.GetPhotoApprovalCountAsync();
 
             return Ok(stats);
 

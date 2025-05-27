@@ -27,7 +27,7 @@ public class AdminRepository : IAdminRepository
 
 
 
-    public async Task<List<PhotoApprovalStatsDto>> GetPhotoApprovalStatsAsync()
+    public async Task<List<PhotoApprovalStatsDto>> GetPhotoApprovalCountAsync()
 
     {
 

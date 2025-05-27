@@ -19,6 +19,9 @@ namespace DatingWebApp.Controllers
         IMapper mapper, IPhotoService photoService) : BaseApiController
     {
 
+        private static readonly Regex TagRegex = new Regex(@"^[a-zA-Z0-9\s\-]{2,30}$", RegexOptions.Compiled);
+
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
         {
@@ -85,26 +88,18 @@ namespace DatingWebApp.Controllers
         }
 
 
-        [HttpPost("add-photo-with-tags")]
-        public async Task<ActionResult<PhotoWithTagsDto>> AddPhotoWithTags(IFormFile file,
-            [FromQuery] List<string> tags)
+        [HttpPost("photo/{id}/tag")]
+        public async Task<ActionResult<PhotoWithTagsDto>> AddPhotoWithTags(int id, [FromBody] AddTagsDto dto)
         {
 
             var user = await unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
             if (user == null) { return BadRequest("Cannot update user"); }
-            var result = await photoService.AddPhotoAsync(file);
 
-            if (result.Error != null){ return BadRequest(result.Error.Message); }
-            var photo = new Photo
-            {
+            var photo = user.Photos.FirstOrDefault(p => p.Id == id);
+            if (photo == null) return NotFound("Photo not found");
 
-                Url = result.SecureUrl.AbsoluteUri,
 
-                PublicId = result.PublicId
-
-            };
-
-            var validTags = tags
+            var validTags = dto.Tags
                 .Where(t => !string.IsNullOrWhiteSpace(t))
                 .Select(t => t.Trim().ToLower())
                 .Distinct()
@@ -113,7 +108,7 @@ namespace DatingWebApp.Controllers
             foreach (var tagName in validTags)
             {
 
-                if (!Regex.IsMatch(tagName, @"^[a-zA-Z0-9\s\-]{2,30}$"))
+                if (!TagRegex.IsMatch(tagName))
 
                     return BadRequest($"Invalid tag: {tagName}");
 
