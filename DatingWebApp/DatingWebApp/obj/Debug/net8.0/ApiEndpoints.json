@@ -108,8 +108,8 @@
       },
       {
         "Name": "roles",
-        "Type": "System.String",
-        "IsRequired": false
+        "Type": "System.String[]",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

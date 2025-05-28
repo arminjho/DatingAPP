@@ -3,11 +3,12 @@ import { Photo } from '../../_models/photo';
 import { AdminService } from '../../_service/admin.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-photo-management',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgFor],
   templateUrl: './photo-management.component.html',
   styleUrl: './photo-management.component.css',
 })
@@ -16,20 +17,17 @@ export class PhotoManagementComponent implements OnInit {
   private adminService = inject(AdminService);
   private toastr = inject(ToastrService);
 
-  tagFilter = '';
+  tagFilter:string[] = [];
+  availableTags: string[] = [];
 
   ngOnInit(): void {
     this.getPhotosForApproval();
+    this.loadAvailableTags();
   }
 
+
   loadPhotosByTags() {
-    const tagList = this.tagFilter
-
-      .split(',')
-
-      .map((tag) => tag.trim())
-
-      .filter((tag) => tag.length > 0);
+    const tagList = this.tagFilter.filter((tag)=>tag.length>0);
 
     if (tagList.length === 0) {
       this.getPhotosForApproval();
@@ -49,6 +47,21 @@ export class PhotoManagementComponent implements OnInit {
       },
     });
   }
+
+  
+loadAvailableTags() {
+  this.adminService.getAllTags().subscribe({
+    next: (tags) => {
+      console.log('Tags from API:', tags);
+      this.availableTags = tags.map((t: any) => t.name);
+    },
+    error: (err) => {
+      console.log(err);
+      this.toastr.error("Couldn't load tags");
+    },
+  });
+}
+
 
   getPhotosForApproval() {
     this.adminService.getPhotosForApproval().subscribe({
