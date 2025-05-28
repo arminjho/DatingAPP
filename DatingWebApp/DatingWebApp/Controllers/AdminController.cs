@@ -14,8 +14,7 @@ using static DatingWebApp.Interfaces.IAdminService;
 
 namespace DatingWebApp.Controllers
 {
-    public class AdminController(UserManager<AppUser> userManager, IUnitOfWork unitOfWork,
-        IPhotoService photoService, ILogger<ExceptionMiddleware> logger, IMapper mapper, IAdminService adminService) : BaseApiController
+    public class AdminController(ILogger<ExceptionMiddleware> logger, IAdminService adminService) : BaseApiController
     {
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("users-with-roles")]

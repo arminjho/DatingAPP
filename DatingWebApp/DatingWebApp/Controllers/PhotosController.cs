@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 namespace DatingWebApp.Controllers
 {
     [Authorize]
-    public class PhotosController(IUnitOfWork unitOfWork, IMapper mapper, ILogger<ExceptionMiddleware> logger, IPhotoService photoService) : BaseApiController
+    public class PhotosController(IUnitOfWork unitOfWork, ILogger<ExceptionMiddleware> logger, IPhotoService photoService) : BaseApiController
     {
         [HttpGet("filter-by-tags")]
         public async Task<ActionResult<IEnumerable<PhotoWithTagsDto>>> GetPhotosByTags([FromQuery] List<string> tags)
