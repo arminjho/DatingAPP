@@ -25,7 +25,7 @@ import { FormsModule } from '@angular/forms';
     TimeagoModule,
     DatePipe,
     MemberMessagesComponent,
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './member-detail.component.html',
   styleUrl: './member-detail.component.css',
@@ -47,7 +47,10 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.route.data.subscribe({
       next: (data) => {
-        this.member = data['member'];
+        this.member = {
+          ...data['member'],
+          photoUrl: data['member'].photoUrl || './assets/user.png',
+        };
 
         this.filteredPhotos = this.member.photos;
 
@@ -56,8 +59,6 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
         );
       },
     });
-
-    
 
     this.route.paramMap.subscribe({
       next: (_) => this.onRouteParamsChange(),
@@ -68,6 +69,10 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
         if (params['tab']) this.selectTab(params['tab']);
       },
     });
+  }
+
+  get safePhotoUrl(): string {
+    return this.member?.photoUrl || './assets/user.png';
   }
 
   ngOnDestroy(): void {
