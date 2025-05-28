@@ -32,8 +32,8 @@ namespace DatingWebApp.Tests
             _unitOfWorkMock.Setup(u => u.UserRepository).Returns(_userRepoMock.Object);
             _unitOfWorkMock.Setup(u => u.Complete()).ReturnsAsync(true);
 
-            
 
+            _controller = new AdminController(null!, _unitOfWorkMock.Object, null!, null!, mapper: _mapperMock.Object);
 
         }
 
@@ -63,6 +63,10 @@ namespace DatingWebApp.Tests
             ClassicAssert.IsInstanceOf<OkResult>(result);
             ClassicAssert.IsTrue(photo.IsApproved);
             ClassicAssert.IsTrue(photo.IsMain); // should be set as main if user had none
+
+
         }
+
+       
     }
 }
