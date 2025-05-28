@@ -2,7 +2,7 @@
 
 <div class="tab-panel">
     <tabset class="member-tabs">
-        <tab heading="User management" *appHasRole="['Admin']">
+        <tab heading="User management" *appHasRole="[UserRole.Admin]">
             <div class="container">
 
                 <app-user-management></app-user-management>
@@ -10,7 +10,7 @@
             </div>
         </tab>
 
-        <tab heading="Photo management" *appHasRole="['Admin','Moderator']">
+        <tab heading="Photo management" *appHasRole="[UserRole.Admin,UserRole.Moderator]">
             <div class="container">
 
                 <app-photo-management></app-photo-management>
@@ -18,7 +18,7 @@
             </div>
         </tab>
 
-         <tab heading="Tags management" *appHasRole="['Admin','Moderator']">
+         <tab heading="Tags management" *appHasRole="[UserRole.Admin,UserRole.Moderator]">
             <div class="container">
 
                 <app-tag-management></app-tag-management>
@@ -26,7 +26,7 @@
             </div>
         </tab>
 
-          <tab heading="Statistics" *appHasRole="['Admin','Moderator']">
+          <tab heading="Statistics" *appHasRole="[UserRole.Admin,UserRole.Moderator]">
             <div class="container">
 
                 <app-user-statistics />

@@ -10,128 +10,63 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static DatingWebApp.Interfaces.IAdminService;
 
 namespace DatingWebApp.Controllers
 {
     public class AdminController(UserManager<AppUser> userManager, IUnitOfWork unitOfWork,
-        IPhotoService photoService, ILogger<ExceptionMiddleware> logger, IMapper mapper) : BaseApiController
+        IPhotoService photoService, ILogger<ExceptionMiddleware> logger, IMapper mapper, IAdminService adminService) : BaseApiController
     {
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("users-with-roles")]
         public async Task<ActionResult> GetUsersWithRoles()
         {
-            var users = await userManager.Users
-                .OrderBy(x => x.UserName)
-                .Select(x => new
-                {
-                    x.Id,
-                    Username = x.UserName,
-                    Roles = x.UserRoles.Select(x => x.Role.Name).ToList()
-                }).ToListAsync();
-            return Ok(users);
+
+            try
+            {
+                var users = await adminService.GetUsersWithRolesAsync();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while retrieving users");
+                return StatusCode(500, "An error occurred while retrieving users");
+            }
+
         }
+
+
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("edit-roles/{username}")]
-        public async Task<ActionResult> EditRoles(string username, string roles)
-        {
-            if (string.IsNullOrEmpty(roles)) { return BadRequest("you must select at least one role"); }
-            var selectedRoles = roles.Split(',').ToArray();
-
-            var user = await userManager.FindByNameAsync(username);
-
-            if (user == null) { return NotFound("User not found"); }
-
-            var userRoles = await userManager.GetRolesAsync(user);
-
-            var result = await userManager.AddToRolesAsync(user, selectedRoles.Except(userRoles));
-
-            if (!result.Succeeded) { return BadRequest("Failed to add to roles"); }
-
-            result = await userManager.RemoveFromRolesAsync(user, userRoles.Except(selectedRoles));
-
-            if (!result.Succeeded) { return BadRequest("Failed to remove from roles"); }
-
-            return Ok(await userManager.GetRolesAsync(user));
-        }
-
-        [Authorize(Policy = "ModeratePhotoRole")]
-        [HttpGet("photos-to-moderate")]
-        public async Task<ActionResult> GetPhotosForModeration()
-        {
-            var photos = await unitOfWork.PhotoRepository.GetUnapprovedPhotos();
-
-            return Ok(photos);
-        }
-
-
-        [Authorize(Policy = "ModeratePhotoRole")]
-        [HttpPost("approve-photo/{photoId}")]
-        public async Task<ActionResult> ApprovePhoto(int photoId)
-        {
-            try
-
-            {
-                var photo = await unitOfWork.PhotoRepository.GetPhotoById(photoId);
-
-                if (photo == null) { return NotFound("Could not get photo from db"); }
-
-                photo.IsApproved = true;
-
-                var user = await unitOfWork.UserRepository.GetUserByPhotoId(photoId);
-
-                if (user == null) { return NotFound("Could not get user from db"); }
-
-                if (!user.Photos.Any(x => x.IsMain)) { photo.IsMain = true; }
-
-                await unitOfWork.Complete();
-
-                return Ok();
-            }
-
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "An error ocurred while approving the photo");
-                return StatusCode(500);
-
-            }
-        }
-
-        [Authorize(Policy = "ModeratePhotoRole")]
-        [HttpPost("reject-photo/{photoId}")]
-        public async Task<ActionResult> RejectPhoto(int photoId)
+        public async Task<ActionResult> EditRoles(string username, [FromBody] string[] roles)
         {
 
             try
-
             {
-                var photo = await unitOfWork.PhotoRepository.GetPhotoById(photoId);
-
-                if (photo == null) { return NotFound("Could not get photo from db"); }
-
-                if (photo.PublicId != null)
-                {
-                    var result = await photoService.DeletePhotoAsync(photo.PublicId);
-
-                    if (result.Result == "ok")
-                    {
-                        unitOfWork.PhotoRepository.RemovePhoto(photo);
-                    }
-                }
-                else
-                {
-                    unitOfWork.PhotoRepository.RemovePhoto(photo);
-                }
-
-                await unitOfWork.Complete();
-
-                return Ok();
+                var updatedRoles = await adminService.EditUserRolesAsync(username, roles);
+                return Ok(updatedRoles);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "An error ocurred while rejecting the photo");
-                return StatusCode(500);
+                logger.LogError(ex, "An error occurred while editing user roles.");
+                return StatusCode(500, "An unexpected error occurred while editing roles.");
             }
+
         }
+
+
 
 
         [Authorize(Policy = "RequireAdminRole")]
@@ -139,75 +74,92 @@ namespace DatingWebApp.Controllers
         [HttpGet("tags")]
 
         public async Task<ActionResult<IEnumerable<TagDto>>> GetAllTags()
-
         {
 
-            var tags = await unitOfWork.TagRepository.GetAllTagsAsync();
+            try
+            {
+                var tags = await adminService.GetAllTagsAsync();
+                return Ok(tags);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while retrieving tags.");
+                return StatusCode(500, "An unexpected error occurred while retrieving tags.");
+            }
 
-            return Ok(mapper.Map<IEnumerable<TagDto>>(tags));
 
         }
 
 
 
         [Authorize(Policy = "RequireAdminRole")]
-
         [HttpPost("add-tag")]
 
         public async Task<ActionResult<TagDto>> AddTag([FromBody] TagDto tagDto)
         {
-            if (string.IsNullOrWhiteSpace(tagDto.Name))
-               { return BadRequest("Tag name is required."); }
 
-            var tagName = tagDto.Name.Trim();
+            try
+            {
+                var createdTag = await adminService.AddTagAsync(tagDto);
+                return Ok(createdTag);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while adding a tag.");
+                return StatusCode(500, "An unexpected error occurred while adding the tag.");
+            }
 
-            if (!Regex.IsMatch(tagName, @"^[a-zA-Z0-9\s\-]{2,30}$"))
-              { return BadRequest("Tag name contains invalid characters or is too short/long."); }
-
-            var existingTags = await unitOfWork.TagRepository.GetAllTagsAsync();
-
-            if (existingTags.Any(t => t.Name.Equals(tagName, StringComparison.OrdinalIgnoreCase)))
-               { return BadRequest("A tag with the same name already exists."); }
-
-            var tag = new Tag { Name = tagName };
-
-            await unitOfWork.TagRepository.AddTagAsync(tag);
-
-            return Ok(mapper.Map<TagDto>(tag));
 
         }
 
 
 
         [Authorize(Policy = "RequireAdminRole")]
-
         [HttpDelete("delete-tag/{id:int}")]
-
         public async Task<ActionResult> DeleteTag(int id)
-
         {
 
-            var tag = await unitOfWork.TagRepository.GetTagByIdAsync(id);
-
-            if (tag == null) return NotFound("Tag not found");
-
-
-
-            await unitOfWork.TagRepository.DeleteTagAsync(tag);
-
-
-
-            return NoContent();
+            try
+            {
+                await adminService.DeleteTagAsync(id);
+                return NoContent();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while deleting the tag.");
+                return StatusCode(500, "An unexpected error occurred while deleting the tag.");
+            }
 
         }
 
         [HttpGet("photo-approval-stats")]
-        public async Task<ActionResult> GetPhotoApprovalStats()
+        public async Task<ActionResult> GetPhotoApprovalCountAsync()
         {
 
-            var stats = await unitOfWork.AdminRepository.GetPhotoApprovalStatsAsync();
 
-            return Ok(stats);
+            try
+            {
+                var stats = await adminService.GetPhotoApprovalStatsAsync();
+                return Ok(stats);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while retrieving photo approval stats.");
+                return StatusCode(500, "An unexpected error occurred while retrieving photo approval statistics.");
+            }
+
 
         }
 
@@ -216,9 +168,18 @@ namespace DatingWebApp.Controllers
         [HttpGet("users-without-main-photo")]
         public async Task<ActionResult> GetUsersWithoutMainPhoto()
         {
-            var users = await unitOfWork.AdminRepository.GetUsersWithoutMainPhotoAsync();
 
-            return Ok(users);
+            try
+            {
+                var users = await adminService.GetUsersWithoutMainPhotoAsync();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occurred while retrieving users without main photo.");
+                return StatusCode(500, "An unexpected error occurred while retrieving users.");
+            }
+
 
         }
 

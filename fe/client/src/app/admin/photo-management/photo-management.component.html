@@ -1,12 +1,17 @@
 <div class="form-group mt-3">
   <label for="tagFilter">Filter photos by tags:</label>
 
-  <input
-    type="text"
+  <select
     class="form-control"
     [(ngModel)]="tagFilter"
-    placeholder="e.g. profile, summer"
-  />
+    id="tagFilter"
+    multiple
+    size="5"
+  >
+       
+    <option *ngFor="let tag of availableTags" [value]="tag">{{ tag }}</option>
+     
+  </select>
 
   <button class="btn btn-primary mt-2" (click)="loadPhotosByTags()">
     Filter
@@ -30,7 +35,7 @@
     <div class="mb-3 text-center">
       @for(tag of photo.tags; track tag.id) {
 
-      <span class="badge bg-secondary me-1">{{tag.name}}</span>
+      <span class="badge bg-secondary me-1">{{ tag.name }}</span>
       }
     </div>
     }

@@ -5,6 +5,7 @@ import { HasRoleDirective } from '../../_directives/has-role.directive';
 import { PhotoManagementComponent } from '../photo-management/photo-management.component';
 import { TagManagementComponent } from "../tag-management/tag-management.component";
 import { UserStatisticsComponent } from "../user-statistics/user-statistics.component";
+import { UserRole } from '../../enums/user-role';
 
 @Component({
   selector: 'app-admin-panel',
@@ -14,5 +15,5 @@ import { UserStatisticsComponent } from "../user-statistics/user-statistics.comp
   styleUrl: './admin-panel.component.css'
 })
 export class AdminPanelComponent {
-
+  UserRole = UserRole;
 }
