@@ -784,10 +784,10 @@
         }
       }
     },
-    "/api/Tag/tags": {
+    "/api/Tags/tags": {
       "get": {
         "tags": [
-          "Tag"
+          "Tags"
         ],
         "responses": {
           "200": {
@@ -822,10 +822,10 @@
         }
       }
     },
-    "/api/Tag/add-tag": {
+    "/api/Tags/add-tag": {
       "post": {
         "tags": [
-          "Tag"
+          "Tags"
         ],
         "requestBody": {
           "content": {
@@ -870,10 +870,10 @@
         }
       }
     },
-    "/api/Tag/delete-tag/{id}": {
+    "/api/Tags/delete-tag/{id}": {
       "delete": {
         "tags": [
-          "Tag"
+          "Tags"
         ],
         "parameters": [
           {

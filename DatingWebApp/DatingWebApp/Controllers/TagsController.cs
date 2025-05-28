@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DatingWebApp.Controllers
 {
-    public class TagController(ILogger<ExceptionMiddleware> logger, ITagService tagService) :BaseApiController
+    public class TagsController(ILogger<ExceptionMiddleware> logger, ITagService tagService) :BaseApiController
     {
 
         [Authorize(Policy = "RequireAdminRole")]

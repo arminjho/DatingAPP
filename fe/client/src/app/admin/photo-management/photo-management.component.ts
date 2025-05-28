@@ -4,6 +4,8 @@ import { AdminService } from '../../_service/admin.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
+import { PhotoService } from '../../_service/photo.service';
+import { TagService } from '../../_service/tag.service';
 
 @Component({
   selector: 'app-photo-management',
@@ -20,6 +22,10 @@ export class PhotoManagementComponent implements OnInit {
   tagFilter:string[] = [];
   availableTags: string[] = [];
 
+  constructor(private photoService:PhotoService, private tagService:TagService){
+
+  }
+
   ngOnInit(): void {
     this.getPhotosForApproval();
     this.loadAvailableTags();
@@ -35,7 +41,7 @@ export class PhotoManagementComponent implements OnInit {
       return;
     }
 
-    this.adminService.getPhotosByTags(tagList).subscribe({
+    this.photoService.getPhotosByTags(tagList).subscribe({
       next: (photos) => {
         this.photos = photos;
       },
@@ -50,7 +56,7 @@ export class PhotoManagementComponent implements OnInit {
 
   
 loadAvailableTags() {
-  this.adminService.getAllTags().subscribe({
+  this.tagService.getAllTags().subscribe({
     next: (tags) => {
       console.log('Tags from API:', tags);
       this.availableTags = tags.map((t: any) => t.name);
@@ -64,7 +70,7 @@ loadAvailableTags() {
 
 
   getPhotosForApproval() {
-    this.adminService.getPhotosForApproval().subscribe({
+    this.photoService.getPhotosForApproval().subscribe({
       next: (photos) => (this.photos = photos),
       error: (err) => {
         console.log(err);
@@ -74,7 +80,7 @@ loadAvailableTags() {
   }
 
   approvePhoto(photoId: number) {
-    this.adminService.approvePhoto(photoId).subscribe({
+    this.photoService.approvePhoto(photoId).subscribe({
       next: () => {
         const photoToApprove = this.photos.find((p) => p.id === photoId);
         if (photoToApprove) {
@@ -89,7 +95,7 @@ loadAvailableTags() {
   }
 
   rejectPhoto(photoId: number) {
-    this.adminService.rejectPhoto(photoId).subscribe({
+    this.photoService.rejectPhoto(photoId).subscribe({
       next: () => {
         const photoToReject = this.photos.find((p) => p.id === photoId);
         if (photoToReject) {

@@ -74,7 +74,7 @@
   },
   {
     "ContainingType": "DatingWebApp.Controllers.AdminController",
-    "Method": "GetPhotoApprovalCountAsync",
+    "Method": "GetPhotoApprovalStatisticsByUser",
     "RelativePath": "api/Admin/photo-approval-stats",
     "HttpMethod": "GET",
     "IsController": true,
@@ -463,9 +463,9 @@
     ]
   },
   {
-    "ContainingType": "DatingWebApp.Controllers.TagController",
+    "ContainingType": "DatingWebApp.Controllers.TagsController",
     "Method": "AddTag",
-    "RelativePath": "api/Tag/add-tag",
+    "RelativePath": "api/Tags/add-tag",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -489,9 +489,9 @@
     ]
   },
   {
-    "ContainingType": "DatingWebApp.Controllers.TagController",
+    "ContainingType": "DatingWebApp.Controllers.TagsController",
     "Method": "DeleteTag",
-    "RelativePath": "api/Tag/delete-tag/{id}",
+    "RelativePath": "api/Tags/delete-tag/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -505,9 +505,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "DatingWebApp.Controllers.TagController",
+    "ContainingType": "DatingWebApp.Controllers.TagsController",
     "Method": "GetAllTags",
-    "RelativePath": "api/Tag/tags",
+    "RelativePath": "api/Tags/tags",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

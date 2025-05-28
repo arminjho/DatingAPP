@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { Tag } from '../../_models/tag';
 import { CommonModule } from '@angular/common';
+import { TagService } from '../../_service/tag.service';
 
 
 
@@ -23,12 +24,16 @@ export class TagManagementComponent implements OnInit {
 
   newTag = '';
 
+  constructor(private tagService:TagService){
+
+  }
+
   ngOnInit(): void {
     this.loadTags();
   }
 
   loadTags() {
-    this.adminService.getAllTags().subscribe({
+    this.tagService.getAllTags().subscribe({
       next: (tags) => (this.tags = tags),
 
       error: (err) => {
@@ -43,7 +48,7 @@ export class TagManagementComponent implements OnInit {
 
     if (!name) return;
 
-    this.adminService.addTag({ name }).subscribe({
+    this.tagService.addTag({ name }).subscribe({
       next: (tag) => {
         this.tags = [...this.tags, tag];
         this.newTag = '';
@@ -58,7 +63,7 @@ export class TagManagementComponent implements OnInit {
   }
 
   deleteTag(tagId: number) {
-    this.adminService.deleteTag(tagId).subscribe({
+    this.tagService.deleteTag(tagId).subscribe({
       next: () => {
         this.tags = this.tags.filter((t) => t.id !== tagId);
         this.toastr.success('Tag deleted');

@@ -7,7 +7,7 @@ namespace DatingWebApp.Interfaces
     {
         Task<List<UserWithRolesDto>> GetUsersWithRolesAsync();
         Task<IList<string>> EditUserRolesAsync(string username, string[] roles);
-        Task<object> GetPhotoApprovalStatsAsync();
+        Task<object> GetPhotoApprovalStatisticsByUser();
         Task<IEnumerable<UserWithoutMainPhotoDto>> GetUsersWithoutMainPhotoAsync();
 
 

@@ -68,13 +68,13 @@ namespace DatingWebApp.Controllers
 
 
         [HttpGet("photo-approval-stats")]
-        public async Task<ActionResult> GetPhotoApprovalCountAsync()
+        public async Task<ActionResult> GetPhotoApprovalStatisticsByUser()
         {
 
 
             try
             {
-                var stats = await adminService.GetPhotoApprovalStatsAsync();
+                var stats = await adminService.GetPhotoApprovalStatisticsByUser();
                 return Ok(stats);
             }
             catch (Exception ex)

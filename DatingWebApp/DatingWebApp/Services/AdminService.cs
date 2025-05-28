@@ -64,9 +64,9 @@ namespace DatingWebApp.Services
 
      
 
-        public async Task<object> GetPhotoApprovalStatsAsync()
+        public async Task<object> GetPhotoApprovalStatisticsByUser()
         {
-            var stats = await _unitOfWork.AdminRepository.GetPhotoApprovalCountAsync();
+            var stats = await _unitOfWork.AdminRepository.GetPhotoApprovalStatisticsByUser();
             return stats;
         }
 
