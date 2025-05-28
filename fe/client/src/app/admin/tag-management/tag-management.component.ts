@@ -45,7 +45,7 @@ export class TagManagementComponent implements OnInit {
 
     this.adminService.addTag({ name }).subscribe({
       next: (tag) => {
-        this.tags.push(tag);
+        this.tags = [...this.tags, tag];
         this.newTag = '';
         this.toastr.success('Tag added');
       },
