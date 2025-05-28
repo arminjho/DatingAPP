@@ -26,32 +26,39 @@ export class AdminService {
 
   updateUserRoles(username: String, roles: string[]) {
     return this.http.post<string[]>(
-      this.baseUrl +
-        `${this.adminUrl}edit-roles` +
-        username +
-        '?roles=' +
-        roles,
-      {}
+      `${this.adminUrl}edit-roles/${username}`,
+      roles
     );
   }
 
   getPhotosForApproval() {
-    return this.http.get<Photo[]>(this.baseUrl + `${this.photoUrl}photos-to-moderate`);
+    return this.http.get<Photo[]>(
+      this.baseUrl + `${this.photoUrl}photos-to-moderate`
+    );
   }
 
   approvePhoto(photoId: number) {
-    return this.http.post(this.baseUrl + `${this.photoUrl}approve-photo/` + photoId, {});
+    return this.http.post(
+      this.baseUrl + `${this.photoUrl}approve-photo/` + photoId,
+      {}
+    );
   }
 
   rejectPhoto(photoId: number) {
-    return this.http.post(this.baseUrl + `${this.photoUrl}reject-photo/` + photoId, {});
+    return this.http.post(
+      this.baseUrl + `${this.photoUrl}reject-photo/` + photoId,
+      {}
+    );
   }
 
   getPhotosByTags(tags: string[]) {
     const params = new HttpParams({ fromObject: { tags } });
-    return this.http.get<Photo[]>(this.baseUrl + `${this.photoUrl}unapproved-by-tags`, {
-      params,
-    });
+    return this.http.get<Photo[]>(
+      this.baseUrl + `${this.photoUrl}unapproved-by-tags`,
+      {
+        params,
+      }
+    );
   }
 
   getAllTags() {
