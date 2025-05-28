@@ -40,12 +40,10 @@ namespace DatingWebApp.Services
             }
 
 
-        public async Task<IList<string>> EditUserRolesAsync(string username, string roles)
+        public async Task<IList<string>> EditUserRolesAsync(string username, string[] roles)
         {
-            if (string.IsNullOrEmpty(roles))
+            if (roles == null || roles.Length == 0)
                 throw new ArgumentException("At least one role must be selected.");
-
-            var selectedRoles = roles.Split(',').Select(r => r.Trim()).ToArray();
 
             var user = await _userManager.FindByNameAsync(username);
             if (user == null)
@@ -53,11 +51,11 @@ namespace DatingWebApp.Services
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
-            var addResult = await _userManager.AddToRolesAsync(user, selectedRoles.Except(userRoles));
+            var addResult = await _userManager.AddToRolesAsync(user, roles.Except(userRoles));
             if (!addResult.Succeeded)
                 throw new InvalidOperationException("Failed to add roles.");
 
-            var removeResult = await _userManager.RemoveFromRolesAsync(user, userRoles.Except(selectedRoles));
+            var removeResult = await _userManager.RemoveFromRolesAsync(user, userRoles.Except(roles));
             if (!removeResult.Succeeded)
                 throw new InvalidOperationException("Failed to remove roles.");
 

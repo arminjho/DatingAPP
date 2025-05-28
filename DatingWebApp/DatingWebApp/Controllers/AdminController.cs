@@ -38,7 +38,7 @@ namespace DatingWebApp.Controllers
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("edit-roles/{username}")]
-        public async Task<ActionResult> EditRoles(string username, string roles)
+        public async Task<ActionResult> EditRoles(string username, [FromBody] string[] roles)
         {
 
             try

@@ -6,7 +6,7 @@ namespace DatingWebApp.Interfaces
    public interface IAdminService
     {
         Task<List<UserWithRolesDto>> GetUsersWithRolesAsync();
-        Task<IList<string>> EditUserRolesAsync(string username, string roles);
+        Task<IList<string>> EditUserRolesAsync(string username, string[] roles);
         Task<IEnumerable<TagDto>> GetAllTagsAsync();
         Task<TagDto> AddTagAsync(TagDto tagDto);
         Task DeleteTagAsync(int id);
