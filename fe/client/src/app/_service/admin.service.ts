@@ -19,26 +19,26 @@ export class AdminService {
   baseUrl = environment.apiUrl;
   private http = inject(HttpClient);
 
-  private adminUrl = `${this.baseUrl}${ApiRoutes.Admin}/`;
+  private adminUrl = `${this.baseUrl}${ApiRoutes.Admin}`;
 
 
   getUsersWithRoles() {
-    return this.http.get<User[]>(`${this.adminUrl}users-with-roles`);
+    return this.http.get<User[]>(`${this.adminUrl}/users-with-roles`);
   }
 
   updateUserRoles(username: String, roles: string[]) {
     return this.http.post<string[]>(
-      `${this.adminUrl}edit-roles/${username}`,
+      `${this.adminUrl}/edit-roles/${username}`,
       roles
     );
   }
 
   getPhotoApprovalStats() {
-    return this.http.get<PhotoStats[]>(`${this.adminUrl}photo-approval-stats`);
+    return this.http.get<PhotoStats[]>(`${this.adminUrl}/photo-approval-stats`);
   }
   getUsersWithoutMainPhoto() {
     return this.http.get<UserWithoutMainPhoto[]>(
-      `${this.adminUrl}users-without-main-photo`
+      `${this.adminUrl}/users-without-main-photo`
     );
   }
 }

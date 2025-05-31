@@ -12,18 +12,18 @@ const ApiRoutes = {
 })
 export class TagService {
   baseUrl = environment.apiUrl;
-  private tagsUrl = `${this.baseUrl}${ApiRoutes.Tags}/`;
+  private tagsUrl = `${this.baseUrl}${ApiRoutes.Tags}`;
   constructor(private http: HttpClient) {}
 
   getAllTags() {
-    return this.http.get<Tag[]>(`${this.tagsUrl}tags`);
+    return this.http.get<Tag[]>(`${this.tagsUrl}/tags`);
   }
 
   addTag(tag: { name: string }) {
-    return this.http.post<Tag>(`${this.tagsUrl}add-tag`, tag);
+    return this.http.post<Tag>(`${this.tagsUrl}/add-tag`, tag);
   }
 
   deleteTag(tagId: number) {
-    return this.http.delete(`${this.tagsUrl}delete-tag/` + tagId);
+    return this.http.delete(`${this.tagsUrl}/delete-tag/` + tagId);
   }
 }
