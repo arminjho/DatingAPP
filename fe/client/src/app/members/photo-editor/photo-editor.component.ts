@@ -1,6 +1,7 @@
 import { Component, inject, input, OnInit, output } from '@angular/core';
 import { Member } from '../../_models/member';
 import {
+  CommonModule,
   DecimalPipe,
   JsonPipe,
   NgClass,
@@ -14,6 +15,7 @@ import { environment } from '../../../environments/environment';
 import { Photo } from '../../_models/photo';
 import { MembersService } from '../../_service/members.service';
 import { FormsModule } from '@angular/forms';
+import { PhotoFilterService } from '../../_service/photo-filter.service';
 
 @Component({
   selector: 'app-photo-editor',
@@ -26,6 +28,7 @@ import { FormsModule } from '@angular/forms';
     FileUploadModule,
     DecimalPipe,
     FormsModule,
+    CommonModule,
   ],
   templateUrl: './photo-editor.component.html',
   styleUrl: './photo-editor.component.css',
@@ -33,6 +36,7 @@ import { FormsModule } from '@angular/forms';
 export class PhotoEditorComponent implements OnInit {
   member = input.required<Member>();
   private accountService = inject(AccountService);
+  private photoFIlterService = inject(PhotoFilterService);
   private memberService = inject(MembersService);
   uploader?: FileUploader;
   hasBaseDropZoneOver = false;
@@ -42,10 +46,12 @@ export class PhotoEditorComponent implements OnInit {
   tagInput = '';
   tagFilter = '';
   filteredPhotos: Photo[] = [];
+  filteredPhotos$ = this.photoFIlterService.filteredPhotos$;
 
   ngOnInit(): void {
     this.initializeUploader();
-    this.filteredPhotos = this.member().photos;
+
+    this.photoFIlterService.setPhotosForCurrentView(this.member().photos);
   }
   setPhotoAsMain(photo: Photo) {
     this.memberService.setMainPhoto(photo).subscribe({
@@ -123,6 +129,8 @@ export class PhotoEditorComponent implements OnInit {
           if (p.id === photo.id) p.isMain = true;
         });
         this.memberChange.emit(updatedMember);
+        this.photoFIlterService.setPhotosForCurrentView(updatedMember.photos);
+
         this.filteredPhotos = updatedMember.photos;
       }
     };
@@ -134,26 +142,17 @@ export class PhotoEditorComponent implements OnInit {
       .map((t) => t.trim().toLowerCase())
       .filter((t) => t.length > 0);
 
-    if (!tags.length) {
-
-      this.filteredPhotos = this.member().photos;
-      return;
-    }
-
-    this.filteredPhotos = this.member().photos.filter((photo) =>
-      photo.tags?.some((tag) => tags.includes(tag.name.toLowerCase()))
-    );
+    this.photoFIlterService.setTagFilter(tags);
   }
 
   clearFilter() {
-
     this.tagFilter = '';
-    this.filteredPhotos = this.member().photos;
+    this.photoFIlterService.setPhotosForCurrentView(this.member().photos);
   }
 
   filterPhotosByTag(tagName: string) {
-
     this.tagFilter = tagName;
+
     this.filterPhotos();
   }
 }

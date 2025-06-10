@@ -1,16 +1,20 @@
 import { CanActivateFn } from '@angular/router';
-import { AccountService } from '../_service/account.service';
 import { inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { AuthStoreService } from '../_service/auth-store.service';
+import { map, take, tap } from 'rxjs';
 
 export const adminGuard: CanActivateFn = (route, state) => {
-  const accountService=inject(AccountService);
-  const toastr=inject(ToastrService);
+  const authStore = inject(AuthStoreService);
+  const toastr = inject(ToastrService);
 
-  if(accountService.roles().includes('Admin') || accountService.roles().includes('Moderator')){
-    return true;
-  } else {
-    toastr.error('You cannot enter this area');
-    return false;
-  }
+  return authStore.roles$.pipe(
+    take(1),
+    map((roles) => roles.includes('Admin') || roles.includes('Moderator')),
+    tap((hasAccess) => {
+      if (!hasAccess) {
+        toastr.error('You cannot enter this area');
+      }
+    })
+  );
 };

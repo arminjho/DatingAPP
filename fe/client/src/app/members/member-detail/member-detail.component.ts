@@ -14,6 +14,7 @@ import { AccountService } from '../../_service/account.service';
 import { HubConnection, HubConnectionState } from '@microsoft/signalr';
 import { Photo } from '../../_models/photo';
 import { FormsModule } from '@angular/forms';
+import { PhotoFilterService } from '../../_service/photo-filter.service';
 
 @Component({
   selector: 'app-member-detail',
@@ -34,6 +35,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   @ViewChild('memberTabs', { static: true }) memberTabs?: TabsetComponent;
   private messageService = inject(MessageService);
   presenceService = inject(PresenceService);
+  private photoFilterService = inject(PhotoFilterService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private accountService = inject(AccountService);
@@ -42,7 +44,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   activetab?: TabDirective;
 
   tagFilter = '';
-  filteredPhotos: Photo[] = [];
+  filteredPhotos$ = this.photoFilterService.filteredPhotos$;
 
   ngOnInit(): void {
     this.route.data.subscribe({
@@ -51,8 +53,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
           ...data['member'],
           photoUrl: data['member'].photoUrl || './assets/user.png',
         };
-
-        this.filteredPhotos = this.member.photos;
+        this.photoFilterService['rawPhotosSubject'].next(this.member.photos);
 
         this.images = this.member.photos.map(
           (p) => new ImageItem({ src: p.url, thumb: p.url })
@@ -124,20 +125,11 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
       .map((t) => t.trim().toLowerCase())
       .filter((t) => t.length > 0);
 
-    if (!tags.length) {
-      this.filteredPhotos = this.member.photos;
-
-      return;
-    }
-
-    this.filteredPhotos = this.member.photos.filter((photo) =>
-      photo.tags?.some((tag) => tags.includes(tag.name.toLowerCase()))
-    );
+    this.photoFilterService.setTagFilter(tags);
   }
 
   clearPhotoFilter() {
     this.tagFilter = '';
-
-    this.filteredPhotos = this.member.photos;
+    this.photoFilterService.clearFilter();
   }
 }
