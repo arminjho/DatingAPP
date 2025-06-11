@@ -6,6 +6,13 @@ import { environment } from '../../environments/environment.development';
 import { LikesService } from './likes.service';
 import { PresenceService } from './presence.service';
 import { AuthStoreService } from './auth-store.service';
+import { LoginDto } from '../_models/loginDto';
+import { RegisterDto } from '../_models/registerDto';
+import { jwtDecode } from 'jwt-decode';
+
+interface JwtPayload {
+  role: string | string[];
+}
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +28,8 @@ export class AccountService {
   roles = computed(() => {
     const user = this.currentUser();
     if (user && user.token) {
-      const role = JSON.parse(atob(user.token.split('.')[1])).role;
+      const decoded = jwtDecode<JwtPayload>(user.token);
+      const role = decoded.role;
       return Array.isArray(role) ? role : [role];
     }
     return [];
@@ -29,7 +37,7 @@ export class AccountService {
 
   constructor(private authStore: AuthStoreService) {}
 
-  login(model: any) {
+  login(model: LoginDto) {
     return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
       map((user) => {
         if (user) {
@@ -40,7 +48,7 @@ export class AccountService {
     );
   }
 
-  register(model: any) {
+  register(model: RegisterDto) {
     return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
       map((user) => {
         if (user) {

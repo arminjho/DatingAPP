@@ -8,6 +8,7 @@ import { HasRoleDirective } from '../_directives/has-role.directive';
 import { AuthStoreService } from '../_service/auth-store.service';
 import { Observable } from 'rxjs';
 import { CommonModule, NgIf } from '@angular/common';
+import { LoginDto } from '../_models/loginDto';
 
 @Component({
   selector: 'app-nav',
@@ -29,7 +30,10 @@ export class NavComponent {
   private router = inject(Router);
   private toasterService = inject(ToastrService);
 
-  model: any = {};
+  model: LoginDto = {
+    username: '',
+    password: '',
+  };
 
   isLoggedIn$: Observable<boolean> = this.authStore.isLoggedIn$;
   isAdmin$: Observable<boolean> = this.authStore.isAdmin$;
@@ -39,7 +43,6 @@ export class NavComponent {
   login() {
     this.accountService.login(this.model).subscribe({
       next: (response) => {
-        console.log('Logged user: ', response);
         this.router.navigateByUrl('/members');
       },
 

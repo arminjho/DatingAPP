@@ -61,7 +61,6 @@ export class PhotoManagementComponent implements OnInit {
   loadAvailableTags() {
     this.tagService.getAllTags().subscribe({
       next: (tags) => {
-        console.log('Tags from API:', tags);
         this.availableTags = tags.map((t: any) => t.name);
       },
       error: (err) => {

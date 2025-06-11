@@ -1,13 +1,11 @@
 import {
   Component,
-  Host,
   HostListener,
   inject,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { Member } from '../../_models/member';
-import { AccountService } from '../../_service/account.service';
 import { MembersService } from '../../_service/members.service';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -40,7 +38,6 @@ export class MemberEditComponent implements OnInit {
   }
   member?: Member;
   private toastr = inject(ToastrService);
-  private accountService = inject(AccountService);
   private authStore = inject(AuthStoreService);
   private memberService = inject(MembersService);
   ngOnInit(): void {

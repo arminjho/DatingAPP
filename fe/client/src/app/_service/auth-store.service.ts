@@ -2,44 +2,59 @@ import { Injectable, computed, signal } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../_models/User';
+import { jwtDecode } from 'jwt-decode';
+
+interface JwtPayload {
+  role: string | string[];
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthStoreService {
-  private currentUserSubject = new BehaviorSubject<User | null>(
-    this.getUserFromLocalStorage()
-  );
+  private currentUserSubject: BehaviorSubject<User | null>;
+  currentUser$: Observable<User | null>;
 
-  currentUser$: Observable<User | null> =
-    this.currentUserSubject.asObservable();
+  isLoggedIn$: Observable<boolean>;
+  isAdmin$: Observable<boolean>;
+  roles$: Observable<string[]>;
 
-  isLoggedIn$: Observable<boolean> = this.currentUser$.pipe(
-    map((user) => !!user)
-  );
+  constructor() {
+    const user = this.getUserFromLocalStorage();
+    this.currentUserSubject = new BehaviorSubject<User | null>(user);
+    this.currentUser$ = this.currentUserSubject.asObservable();
 
-  isAdmin$: Observable<boolean> = this.currentUser$.pipe(
-    map((user) => {
-      if (!user) return false;
+    this.isLoggedIn$ = this.currentUser$.pipe(map((user) => !!user));
 
-      const role = JSON.parse(atob(user.token.split('.')[1])).role;
+    this.isAdmin$ = this.currentUser$.pipe(
+      map((user) => {
+        if (!user) return false;
+        try {
+          const decoded = jwtDecode<JwtPayload>(user.token);
+          const role = decoded.role;
 
-      return Array.isArray(role) ? role.includes('Admin') : role === 'Admin';
-    })
-  );
+          return Array.isArray(role)
+            ? role.includes('Admin')
+            : role === 'Admin';
+        } catch {
+          return false;
+        }
+      })
+    );
 
-  roles$: Observable<string[]> = this.currentUser$.pipe(
-    map((user) => {
-      try {
-        if (!user) return [];
-        const decoded = JSON.parse(atob(user.token.split('.')[1]));
-        const roles = decoded.role;
-        return Array.isArray(roles) ? roles : [roles];
-      } catch {
-        return [];
-      }
-    })
-  );
+    this.roles$ = this.currentUser$.pipe(
+      map((user) => {
+        try {
+          if (!user) return [];
+          const decoded = jwtDecode<JwtPayload>(user.token);
+          const roles = decoded.role;
+          return Array.isArray(roles) ? roles : [roles];
+        } catch {
+          return [];
+        }
+      })
+    );
+  }
 
   setUser(user: User | null) {
     if (user) {

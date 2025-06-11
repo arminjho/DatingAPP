@@ -15,6 +15,7 @@ import { HubConnection, HubConnectionState } from '@microsoft/signalr';
 import { Photo } from '../../_models/photo';
 import { FormsModule } from '@angular/forms';
 import { PhotoFilterService } from '../../_service/photo-filter.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-member-detail',
@@ -33,6 +34,8 @@ import { PhotoFilterService } from '../../_service/photo-filter.service';
 })
 export class MemberDetailComponent implements OnInit, OnDestroy {
   @ViewChild('memberTabs', { static: true }) memberTabs?: TabsetComponent;
+
+  private subscriptions = new Subscription();
   private messageService = inject(MessageService);
   presenceService = inject(PresenceService);
   private photoFilterService = inject(PhotoFilterService);
@@ -47,29 +50,34 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   filteredPhotos$ = this.photoFilterService.filteredPhotos$;
 
   ngOnInit(): void {
-    this.route.data.subscribe({
-      next: (data) => {
-        this.member = {
-          ...data['member'],
-          photoUrl: data['member'].photoUrl || './assets/user.png',
-        };
-        this.photoFilterService['rawPhotosSubject'].next(this.member.photos);
+    this.subscriptions.add(
+      this.route.data.subscribe({
+        next: (data) => {
+          this.member = {
+            ...data['member'],
+            photoUrl: data['member'].photoUrl || './assets/user.png',
+          };
+          this.photoFilterService['rawPhotosSubject'].next(this.member.photos);
 
-        this.images = this.member.photos.map(
-          (p) => new ImageItem({ src: p.url, thumb: p.url })
-        );
-      },
-    });
+          this.images = this.member.photos.map(
+            (p) => new ImageItem({ src: p.url, thumb: p.url })
+          );
+        },
+      })
+    );
 
-    this.route.paramMap.subscribe({
-      next: (_) => this.onRouteParamsChange(),
-    });
-
-    this.route.queryParams.subscribe({
-      next: (params) => {
-        if (params['tab']) this.selectTab(params['tab']);
-      },
-    });
+    this.subscriptions.add(
+      this.route.paramMap.subscribe({
+        next: (_) => this.onRouteParamsChange(),
+      })
+    );
+    this.subscriptions.add(
+      this.route.queryParams.subscribe({
+        next: (params) => {
+          if (params['tab']) this.selectTab(params['tab']);
+        },
+      })
+    );
   }
 
   get safePhotoUrl(): string {
@@ -78,6 +86,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.messageService.stopHubConnection();
+    this.subscriptions.unsubscribe();
   }
 
   selectTab(heading: string) {
