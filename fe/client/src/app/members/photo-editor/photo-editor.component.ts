@@ -16,6 +16,8 @@ import { Photo } from '../../_models/photo';
 import { MembersService } from '../../_service/members.service';
 import { FormsModule } from '@angular/forms';
 import { PhotoFilterService } from '../../_service/photo-filter.service';
+import { PhotoFeedService } from '../../_service/photo-feed.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-photo-editor',
@@ -38,6 +40,8 @@ export class PhotoEditorComponent implements OnInit {
   private accountService = inject(AccountService);
   private photoFIlterService = inject(PhotoFilterService);
   private memberService = inject(MembersService);
+  private photoFeedService = inject(PhotoFeedService);
+  userPhotos$!: Observable<Photo[]>;
   uploader?: FileUploader;
   hasBaseDropZoneOver = false;
   baseUrl = environment.apiUrl;
@@ -51,7 +55,12 @@ export class PhotoEditorComponent implements OnInit {
   ngOnInit(): void {
     this.initializeUploader();
 
-    this.photoFIlterService.setPhotosForCurrentView(this.member().photos);
+    const username = this.member().username;
+    this.userPhotos$ = this.photoFeedService.getUserPhotoStream(username);
+
+    this.userPhotos$.subscribe((photos) => {
+      this.photoFIlterService.setPhotosForCurrentView(photos);
+    });
   }
   setPhotoAsMain(photo: Photo) {
     this.memberService.setMainPhoto(photo).subscribe({
