@@ -14,6 +14,8 @@ import { AccountService } from '../../_service/account.service';
 import { HubConnection, HubConnectionState } from '@microsoft/signalr';
 import { Photo } from '../../_models/photo';
 import { FormsModule } from '@angular/forms';
+import { PhotoFilterService } from '../../_service/photo-filter.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-member-detail',
@@ -32,8 +34,11 @@ import { FormsModule } from '@angular/forms';
 })
 export class MemberDetailComponent implements OnInit, OnDestroy {
   @ViewChild('memberTabs', { static: true }) memberTabs?: TabsetComponent;
+
+  private subscriptions = new Subscription();
   private messageService = inject(MessageService);
   presenceService = inject(PresenceService);
+  private photoFilterService = inject(PhotoFilterService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private accountService = inject(AccountService);
@@ -42,33 +47,37 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
   activetab?: TabDirective;
 
   tagFilter = '';
-  filteredPhotos: Photo[] = [];
+  filteredPhotos$ = this.photoFilterService.filteredPhotos$;
 
   ngOnInit(): void {
-    this.route.data.subscribe({
-      next: (data) => {
-        this.member = {
-          ...data['member'],
-          photoUrl: data['member'].photoUrl || './assets/user.png',
-        };
+    this.subscriptions.add(
+      this.route.data.subscribe({
+        next: (data) => {
+          this.member = {
+            ...data['member'],
+            photoUrl: data['member'].photoUrl || './assets/user.png',
+          };
+          this.photoFilterService['rawPhotosSubject'].next(this.member.photos);
 
-        this.filteredPhotos = this.member.photos;
+          this.images = this.member.photos.map(
+            (p) => new ImageItem({ src: p.url, thumb: p.url })
+          );
+        },
+      })
+    );
 
-        this.images = this.member.photos.map(
-          (p) => new ImageItem({ src: p.url, thumb: p.url })
-        );
-      },
-    });
-
-    this.route.paramMap.subscribe({
-      next: (_) => this.onRouteParamsChange(),
-    });
-
-    this.route.queryParams.subscribe({
-      next: (params) => {
-        if (params['tab']) this.selectTab(params['tab']);
-      },
-    });
+    this.subscriptions.add(
+      this.route.paramMap.subscribe({
+        next: (_) => this.onRouteParamsChange(),
+      })
+    );
+    this.subscriptions.add(
+      this.route.queryParams.subscribe({
+        next: (params) => {
+          if (params['tab']) this.selectTab(params['tab']);
+        },
+      })
+    );
   }
 
   get safePhotoUrl(): string {
@@ -77,6 +86,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.messageService.stopHubConnection();
+    this.subscriptions.unsubscribe();
   }
 
   selectTab(heading: string) {
@@ -124,20 +134,11 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
       .map((t) => t.trim().toLowerCase())
       .filter((t) => t.length > 0);
 
-    if (!tags.length) {
-      this.filteredPhotos = this.member.photos;
-
-      return;
-    }
-
-    this.filteredPhotos = this.member.photos.filter((photo) =>
-      photo.tags?.some((tag) => tags.includes(tag.name.toLowerCase()))
-    );
+    this.photoFilterService.setTagFilter(tags);
   }
 
   clearPhotoFilter() {
     this.tagFilter = '';
-
-    this.filteredPhotos = this.member.photos;
+    this.photoFilterService.clearFilter();
   }
 }
