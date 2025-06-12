@@ -38,7 +38,7 @@ export class AccountService {
   constructor(private authStore: AuthStoreService) {}
 
   login(model: LoginDto) {
-    return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
+    return this.http.post<User>(`${this.baseUrl}account/login`, model).pipe(
       map((user) => {
         if (user) {
           this.setCurrentUser(user);
@@ -49,7 +49,7 @@ export class AccountService {
   }
 
   register(model: RegisterDto) {
-    return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
+    return this.http.post<User>(`${this.baseUrl}account/register`, model).pipe(
       map((user) => {
         if (user) {
           this.setCurrentUser(user);

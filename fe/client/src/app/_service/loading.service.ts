@@ -13,6 +13,9 @@ export class LoadingService {
   show() {
     this.requestCount++;
     this.loadingSubject.next(true);
+    setTimeout(() => {
+      this.hide();
+    }, 3000);
   }
 
   hide() {

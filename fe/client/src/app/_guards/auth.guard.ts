@@ -9,12 +9,5 @@ export const authGuard: CanActivateFn = (route, state) => {
   const authStore = inject(AuthStoreService);
   const toastrService = inject(ToastrService);
 
-  return authStore.isLoggedIn$.pipe(
-    take(1),
-    map((isLoggedIn) => {
-      if (isLoggedIn) return true;
-
-      return false;
-    })
-  );
+  return authStore.isLoggedIn$.pipe(take(1));
 };
