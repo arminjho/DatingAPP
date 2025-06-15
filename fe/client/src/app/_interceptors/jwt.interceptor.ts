@@ -3,18 +3,16 @@ import { AccountService } from '../_service/account.service';
 import { inject } from '@angular/core';
 
 export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
+  const userJson = localStorage.getItem('user');
+  const user = userJson ? JSON.parse(userJson) : null;
 
-  const accountService=inject(AccountService);
-  if(accountService.currentUser()){
-    req=req.clone({
-      setHeaders:{
-        Authorization: `Bearer ${accountService.currentUser()?.token}`
-      }
-    })
+  if (user?.token) {
+    req = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
   }
 
   return next(req);
-
-
-
 };

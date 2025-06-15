@@ -1,6 +1,5 @@
 <div class="row">
-
-    <div class="mt-4 mb-4">
+  <div class="mt-4 mb-4">
     <h6>Filter your photos by tag</h6>
     <input
       type="text"
@@ -18,7 +17,7 @@
     </button>
   </div>
 
-  @for (photo of filteredPhotos; track photo.id) {
+  @for (photo of filteredPhotos$ | async; track photo.id) {
   <div class="col-2 photo-editor__img-wrapper">
     <img
       src="{{ photo.url }}"
@@ -158,6 +157,4 @@
       </button>
     </div>
   </div>
-
-  
 </div>
